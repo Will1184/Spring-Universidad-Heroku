@@ -8,11 +8,14 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "carreras")
 public class Carrera implements Serializable {
@@ -29,6 +32,24 @@ public class Carrera implements Serializable {
     private LocalDate fechaAlta;
     @Column(name = "fecha_modificacion")
     private LocalDate fechaModificacion;
+
+    @OneToMany(
+            mappedBy = "carrera",
+            fetch = FetchType.LAZY
+    )
+    private Set<Alumno> alumnos;
+    @ManyToMany(
+            mappedBy = "carreras",
+            fetch = FetchType.LAZY
+    )
+    private Set<Profesor>profesores;
+
+    public Carrera(Integer id, String nombre, Integer cantidadMaterias, Integer cantidadAnios) {
+        this.id = id;
+        this.nombre = nombre;
+        this.cantidadMaterias = cantidadMaterias;
+        this.cantidadAnios = cantidadAnios;
+    }
 
     @PrePersist
     public void antesDePersistir(){
@@ -49,5 +70,18 @@ public class Carrera implements Serializable {
                         ", cantidadAnios: " + cantidadAnios +
                         ", fechaAlta: " + fechaAlta +
                         ", fechaModificacion: " + fechaModificacion;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Carrera carrera = (Carrera) o;
+        return Objects.equals(id, carrera.id) && Objects.equals(nombre, carrera.nombre);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nombre);
     }
 }

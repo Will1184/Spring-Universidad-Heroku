@@ -47,11 +47,11 @@ public class Aula implements Serializable {
     public void antesDePersistir(){
         this.fechaALta=LocalDate.now();
     }
-
     @PreUpdate
     public void antesDeUpdate(){
         this.fechaModificacion=LocalDate.now();
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

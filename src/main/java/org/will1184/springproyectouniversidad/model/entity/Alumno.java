@@ -1,21 +1,31 @@
 package org.will1184.springproyectouniversidad.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import org.will1184.springproyectouniversidad.model.Persona;
+import lombok.*;
 
+import java.time.LocalDate;
+
+@Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
-@Table(name = "Alumnos")
-
+@Table(name = "alumnos")
+@PrimaryKeyJoinColumn(name = "persona_id")
 public class Alumno extends Persona {
+    @ManyToOne(
+            optional = true,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            fetch = FetchType.LAZY
+    )
+    @JoinColumn(name = "carreras_id")
+    private Carrera carrera;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
+    @Override
+    public String toString() {
+        return super.toString()+"Alumno{}";
+    }
 }

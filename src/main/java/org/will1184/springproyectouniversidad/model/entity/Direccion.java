@@ -10,11 +10,10 @@ import java.io.Serializable;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Embeddable
 public class Direccion implements Serializable {
-    private Long id;
     private String calle;
     private  String numero;
     private String codigoPostal;
@@ -24,8 +23,7 @@ public class Direccion implements Serializable {
 
     @Override
     public String toString() {
-        return "id: " + id +
-                ", calle: " + calle +
+        return " calle: " + calle +
                 ", numero: " + numero +
                 ", codigoPostal: " + codigoPostal +
                 ", depto: " + depto +
