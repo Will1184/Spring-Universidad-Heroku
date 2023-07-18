@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.will1184.springproyectouniversidad.model.entity.Carrera;
 import org.will1184.springproyectouniversidad.service.contratos.AlumnoDAO;
+import org.will1184.springproyectouniversidad.service.implementaciones.AlumnoDAOImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +16,7 @@ import java.util.Optional;
 public class SpringProyectoUniversidadApplication {
 
     @Autowired
-    AlumnoDAO service;
+    AlumnoDAOImpl service;
     public static void main(String[] args) {
         SpringApplication.run
                 (SpringProyectoUniversidadApplication.class, args)

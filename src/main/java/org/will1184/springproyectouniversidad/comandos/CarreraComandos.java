@@ -14,17 +14,25 @@ public class CarreraComandos implements CommandLineRunner {
     private CarreraDAO servicio;
     @Override
     public void run(String... args) throws Exception {
-        Carrera ingSistemas = new Carrera(null,"Ingenieria en sistemas",50,5);
-        Carrera save =servicio.save(ingSistemas);
-        System.out.println(save.toString());
-
+//        Carrera ingSistemas = new Carrera(null,"Ingenieria en sistemas",50,5);
+//        Carrera save =servicio.save(ingSistemas);
+//        System.out.println(save.toString());
+        Carrera carrera = null;
         Optional<Carrera> oCarrera=servicio.findById(1);
         if (oCarrera.isPresent()){
-            Carrera carrera = oCarrera.get();
+            carrera = oCarrera.get();
             System.out.println(carrera.toString());
         }else {
             System.out.println("Carrera no existe");
         }
+        carrera.setCantidadMaterias(65);
+        carrera.setCantidadAnios(6);
+
+        servicio.save(carrera);
+        System.out.println(servicio.findById(1).orElse(new Carrera()).toString());
+        servicio.deleteById(1);
+        System.out.println(servicio.findById(1).orElse(new Carrera()).toString());
+
 
     }
 }

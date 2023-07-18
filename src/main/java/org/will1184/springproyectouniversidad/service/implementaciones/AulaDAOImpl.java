@@ -1,4 +1,4 @@
 package org.will1184.springproyectouniversidad.service.implementaciones;
 
-public class PabellonImpl {
+public class AulaDAOImpl {
 }
