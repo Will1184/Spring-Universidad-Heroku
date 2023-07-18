@@ -1,4 +1,4 @@
-package org.will1184.springproyectouniversidad.model.entity;
+package org.will1184.springproyectouniversidad.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

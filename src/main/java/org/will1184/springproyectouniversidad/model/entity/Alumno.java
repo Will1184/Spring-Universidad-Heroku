@@ -2,6 +2,7 @@ package org.will1184.springproyectouniversidad.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.will1184.springproyectouniversidad.model.Direccion;
 
 import java.time.LocalDate;
 
@@ -24,8 +25,12 @@ public class Alumno extends Persona {
     @JoinColumn(name = "carreras_id")
     private Carrera carrera;
 
+    public Alumno(Integer id, String nombre, String apellido, String dni, Direccion direccion) {
+        super(id, nombre, apellido, dni, direccion);
+    }
+
     @Override
     public String toString() {
-        return super.toString()+"Alumno{}";
+        return super.toString()+" Alumno{}";
     }
 }

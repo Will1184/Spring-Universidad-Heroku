@@ -2,9 +2,9 @@ package org.will1184.springproyectouniversidad.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.will1184.springproyectouniversidad.model.Direccion;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -37,6 +37,14 @@ public abstract class Persona implements Serializable {
             @AttributeOverride(name = "depto", column = @Column(name = "departamento"))
     })
     private Direccion direccion;
+
+    public Persona(Integer id, String nombre, String apellido, String dni, Direccion direccion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.dni = dni;
+        this.direccion = direccion;
+    }
 
     @PrePersist
     public void antesDePersistir(){
