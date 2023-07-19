@@ -3,6 +3,7 @@ package org.will1184.springproyectouniversidad.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import org.will1184.springproyectouniversidad.model.Direccion;
 import org.will1184.springproyectouniversidad.model.enums.TipoEmpleado;
 
 import java.math.BigDecimal;
@@ -30,6 +31,12 @@ public class Empleado extends Persona {
             foreignKey = @ForeignKey(name = "FK_PABELLON_ID")
     )
     private Pabellon pabellon;
+
+    public Empleado(Integer id, String nombre, String apellido, String dni,  Direccion direccion, BigDecimal sueldo, TipoEmpleado tipoEmpleado) {
+        super(id, nombre, apellido, dni, direccion);
+        this.sueldo = sueldo;
+        this.tipoEmpleado = tipoEmpleado;
+    }
 
     @Override
     public String toString() {

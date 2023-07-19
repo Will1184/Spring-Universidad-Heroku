@@ -2,6 +2,7 @@ package org.will1184.springproyectouniversidad.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.will1184.springproyectouniversidad.model.Direccion;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -30,6 +31,12 @@ public class Profesor extends Persona {
             inverseJoinColumns = @JoinColumn(name = "carrera_id")
     )
     private Set<Carrera> carreras;
+
+    public Profesor(Integer id, String nombre, String apellido, String dni, Direccion direccion, BigDecimal sueldo) {
+        super(id, nombre, apellido, dni, direccion);
+        this.sueldo = sueldo;
+    }
+
     @Override
     public String toString() {
         return "\tProfesor:" +

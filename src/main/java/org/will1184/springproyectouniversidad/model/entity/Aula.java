@@ -26,7 +26,7 @@ public class Aula implements Serializable {
     @Column(name = "medidas_mtsxmts",nullable = false)
     private String medidas;
     @Column(name = "cantidad_pupitres")
-    private String cantPupitres;
+    private Integer cantPupitres;
     @Column(name = "tipo_pizarron")
     @Enumerated(EnumType.STRING)
     private Pizarron pizarron;
@@ -42,6 +42,14 @@ public class Aula implements Serializable {
             }
     )@JoinColumn(name = "pabellon_id",foreignKey = @ForeignKey(name = "FK_PABELLON_ID"))
     private Pabellon pabellon;
+
+    public Aula(Integer id, Integer nroAula, String medidas, Integer cantPupitres, Pizarron pizarron) {
+        this.id = id;
+        this.nroAula = nroAula;
+        this.medidas = medidas;
+        this.cantPupitres = cantPupitres;
+        this.pizarron = pizarron;
+    }
 
     @PrePersist
     public void antesDePersistir(){

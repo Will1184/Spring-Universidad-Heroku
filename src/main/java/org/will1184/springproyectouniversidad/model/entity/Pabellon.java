@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
+import org.will1184.springproyectouniversidad.model.Direccion;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -42,6 +43,14 @@ public class Pabellon implements Serializable {
     )
     private Set<Aula>aulas;
 
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "codigoPostal", column = @Column(name = "codigo_postal")),
+            @AttributeOverride(name = "depto", column = @Column(name = "departamento"))
+    })
+    private Direccion direccion;
+
+
     @PrePersist
     public void antesDePersistir(){
         this.fechaAlta=LocalDate.now();
@@ -52,6 +61,12 @@ public class Pabellon implements Serializable {
         this.fechaModificacion=LocalDate.now();
     }
 
+    public Pabellon(Integer id, String nombre, Double mts2, Direccion direccion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.mts2 = mts2;
+        this.direccion = direccion;
+    }
 
     @Override
     public String toString() {
