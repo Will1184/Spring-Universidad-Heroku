@@ -7,6 +7,6 @@ import org.will1184.springproyectouniversidad.model.entity.Persona;
 
 @Repository("alumnoRepository")
 public interface AlumnoRepository extends PersonaRepository{
-    @Query("SELECT a FROM Alumno a JOIN FETCH a.carrera c WHERE c.nombre=?1")
-    Iterable<Alumno>findAllByNombreCarrera(String nombre);
+    @Query("SELECT a FROM Alumno a JOIN a.carrera c WHERE c.nombre=?1")
+    Iterable<Persona> buscarAlumnosPorCarrera(String nombre);
 }

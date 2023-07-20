@@ -2,6 +2,7 @@ package org.will1184.springproyectouniversidad.comandos;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.will1184.springproyectouniversidad.model.entity.Carrera;
 import org.will1184.springproyectouniversidad.service.contratos.CarreraDAO;
@@ -11,8 +12,11 @@ import java.util.Optional;
 
 @Component
 public class CarreraComandos implements CommandLineRunner {
-    @Autowired
-    private CarreraDAO servicio;
+    private final CarreraDAO servicio;
+    public CarreraComandos(CarreraDAO servicio) {
+        this.servicio = servicio;
+    }
+
     @Override
     public void run(String... args) throws Exception {
 //        Carrera ingSistemas = new Carrera(null,"Ingenieria en sistemas",50,5);
@@ -34,39 +38,39 @@ public class CarreraComandos implements CommandLineRunner {
 //        servicio.deleteById(1);
 //        System.out.println(servicio.findById(1).orElse(new Carrera()).toString());
 
-//        Carrera ingSistemas = new Carrera(null, "Ingenieria en Sistemas", 60, 5);
-//        Carrera ingIndustrial = new Carrera(null, "Ingenieria Industrial", 55, 5);
-//        Carrera ingAlimentos = new Carrera(null, "Ingenieria en Alimentos", 53, 5);
-//        Carrera ingElectronica = new Carrera(null, "Ingenieria Electronica", 45, 5);
-//        Carrera licSistemas = new Carrera(null, "Licenciatura en Sistemas", 40, 4);
-//        Carrera licTurismo = new Carrera(null, "Licenciatura en Turismo", 42, 4);
-//        Carrera licYoga = new Carrera(null, "Licenciatura en Yoga", 25, 3);
-//        Carrera licRecursos = new Carrera(null, "Licenciatura en Recursos Humanos - RRHH", 33, 3);
-//
-//        servicio.save(ingSistemas);
-//        servicio.save(ingIndustrial);
-//        servicio.save(ingAlimentos);
-//        servicio.save(ingElectronica);
-//        servicio.save(licSistemas);
-//        servicio.save(licTurismo);
-//        servicio.save(licYoga);
-//        servicio.save(licRecursos);
-//
-//        System.out.println("Todas las carreras");
-//        List<Carrera> carreras =(List<Carrera>) servicio.findAll();
-//           carreras.forEach(System.out::println);
-//        System.out.println("findCarreraByNombreContains");
-//        carreras =(List<Carrera>) servicio.findCarreraByNombreContains("Sistemas");
-//        carreras.forEach(System.out::println);
-//        System.out.println("findCarreraByNombreContainsIgnoreCase Mayusculas");
-//        carreras =(List<Carrera>) servicio.findCarreraByNombreContainsIgnoreCase("SISTEMAS");
-//        carreras.forEach(System.out::println);
-//        System.out.println("findCarreraByNombreContainsIgnoreCase minusculas");
-//        carreras =(List<Carrera>) servicio.findCarreraByNombreContainsIgnoreCase("sistemas");
-//        carreras.forEach(System.out::println);
-//
-//        System.out.println("findCarreraByCantidadAniosAfter");
-//        carreras =(List<Carrera>) servicio.findCarreraByCantidadAniosAfter(5);
-//        carreras.forEach(System.out::println);
+        Carrera ingSistemas = new Carrera(null, "Ingenieria en Sistemas", 60, 5);
+        Carrera ingIndustrial = new Carrera(null, "Ingenieria Industrial", 55, 5);
+        Carrera ingAlimentos = new Carrera(null, "Ingenieria en Alimentos", 53, 5);
+        Carrera ingElectronica = new Carrera(null, "Ingenieria Electronica", 45, 5);
+        Carrera licSistemas = new Carrera(null, "Licenciatura en Sistemas", 40, 4);
+        Carrera licTurismo = new Carrera(null, "Licenciatura en Turismo", 42, 4);
+        Carrera licYoga = new Carrera(null, "Licenciatura en Yoga", 25, 3);
+        Carrera licRecursos = new Carrera(null, "Licenciatura en Recursos Humanos - RRHH", 33, 3);
+
+        servicio.save(ingSistemas);
+        servicio.save(ingIndustrial);
+        servicio.save(ingAlimentos);
+        servicio.save(ingElectronica);
+        servicio.save(licSistemas);
+        servicio.save(licTurismo);
+        servicio.save(licYoga);
+        servicio.save(licRecursos);
+
+        System.out.println("Todas las carreras");
+        List<Carrera> carreras =(List<Carrera>) servicio.findAll();
+           carreras.forEach(System.out::println);
+        System.out.println("findCarreraByNombreContains");
+        carreras =(List<Carrera>) servicio.findCarreraByNombreContains("Sistemas");
+        carreras.forEach(System.out::println);
+        System.out.println("findCarreraByNombreContainsIgnoreCase Mayusculas");
+        carreras =(List<Carrera>) servicio.findCarreraByNombreContainsIgnoreCase("SISTEMAS");
+        carreras.forEach(System.out::println);
+        System.out.println("findCarreraByNombreContainsIgnoreCase minusculas");
+        carreras =(List<Carrera>) servicio.findCarreraByNombreContainsIgnoreCase("sistemas");
+        carreras.forEach(System.out::println);
+
+        System.out.println("findCarreraByCantidadAniosAfter");
+        carreras =(List<Carrera>) servicio.findCarreraByCantidadAniosAfter(5);
+        carreras.forEach(System.out::println);
     }
 }

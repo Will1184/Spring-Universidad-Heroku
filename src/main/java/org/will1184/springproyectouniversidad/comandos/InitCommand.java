@@ -10,7 +10,6 @@ import org.will1184.springproyectouniversidad.service.contratos.PabellonDAO;
 import org.will1184.springproyectouniversidad.service.contratos.PersonaDAO;
 
 @Component
-@Order(1)
 public class InitCommand {
     @Autowired
     @Qualifier(value = "alumnoDAOImpl")

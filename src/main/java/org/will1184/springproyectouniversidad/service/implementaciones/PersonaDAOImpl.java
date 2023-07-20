@@ -1,6 +1,7 @@
 package org.will1184.springproyectouniversidad.service.implementaciones;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.will1184.springproyectouniversidad.model.entity.Persona;
@@ -9,9 +10,8 @@ import org.will1184.springproyectouniversidad.service.contratos.PersonaDAO;
 
 import java.util.Optional;
 
-@Service
 public class PersonaDAOImpl extends GenericoDAOImpl<Persona, PersonaRepository> implements PersonaDAO {
-    @Autowired
+
     public PersonaDAOImpl(PersonaRepository repository) {
         super(repository);
     }
