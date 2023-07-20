@@ -39,7 +39,7 @@ public class Profesor extends Persona {
 
     @Override
     public String toString() {
-        return "\tProfesor:" +
-                "sueldo: " + sueldo;
+        return "\tProfesor:" +super.toString()+
+                " sueldo: " + sueldo;
     }
 }

@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.will1184.springproyectouniversidad.model.Direccion;
 
-import java.time.LocalDate;
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -27,6 +25,11 @@ public class Alumno extends Persona {
 
     public Alumno(Integer id, String nombre, String apellido, String dni, Direccion direccion) {
         super(id, nombre, apellido, dni, direccion);
+    }
+
+    public Alumno(Integer id, String nombre, String apellido, String dni, Direccion direccion, Carrera carrera) {
+        super(id, nombre, apellido, dni, direccion);
+        this.carrera = carrera;
     }
 
     @Override

@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
+@Order(2)
 public class CarreraComandos implements CommandLineRunner {
     private final CarreraDAO servicio;
     public CarreraComandos(CarreraDAO servicio) {
@@ -71,6 +72,11 @@ public class CarreraComandos implements CommandLineRunner {
 
         System.out.println("findCarreraByCantidadAniosAfter");
         carreras =(List<Carrera>) servicio.findCarreraByCantidadAniosAfter(5);
+        carreras.forEach(System.out::println);
+
+        System.out.println("Buscar carrera por nombre y apellido");
+        carreras =(List<Carrera>) servicio.buscarCarrerasPorProfesorNombreYApellido(
+                ObjetosDummy.getProfesorUno().getNombre(),ObjetosDummy.getProfesorUno().getApellido());
         carreras.forEach(System.out::println);
     }
 }

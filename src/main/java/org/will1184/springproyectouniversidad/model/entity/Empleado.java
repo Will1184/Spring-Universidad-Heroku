@@ -40,8 +40,8 @@ public class Empleado extends Persona {
 
     @Override
     public String toString() {
-        return "\tEmpleado:" +
-                "sueldo: " + sueldo +
+        return "\tEmpleado:" + super.toString()+
+                " sueldo: " + sueldo +
                 ", tipoEmpleado: " + tipoEmpleado +
                 ", pabellon: " + pabellon;
     }

@@ -6,31 +6,46 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.will1184.springproyectouniversidad.model.entity.Alumno;
+import org.will1184.springproyectouniversidad.model.entity.Carrera;
 import org.will1184.springproyectouniversidad.model.entity.Persona;
 import org.will1184.springproyectouniversidad.service.contratos.AlumnoDAO;
 import org.will1184.springproyectouniversidad.service.contratos.CarreraDAO;
 
 import org.will1184.springproyectouniversidad.service.contratos.PersonaDAO;
-
 import java.util.Optional;
 
 @Component
-//@Order(4)
+@Order(4)
 public class AlumnoCommand implements CommandLineRunner {
     @Autowired
     @Qualifier("alumnoDAOImpl")
     private PersonaDAO personaDAO;
+
     @Autowired
     private CarreraDAO carreraDAO;
     @Override
     public void run(String... args) throws Exception {
 
         System.out.println("---------- ************* Alumnos Command ********** --------");
-        System.out.println("----Busqueda por apellido");
+        ((AlumnoDAO)personaDAO).save(ObjetosDummy.getAlumnoUno());
+        ((AlumnoDAO)personaDAO).save(ObjetosDummy.getAlumnoDos());
+
+        Iterable<Persona> alumnos=((AlumnoDAO)personaDAO).findAll();
+        alumnos.forEach(System.out::println);
+        System.out.println("Alumno ");
+        Persona alumno =personaDAO.findById(5).orElseThrow();
+        System.out.println(alumno);
+
+        Carrera carrera= carreraDAO.findById(1).orElseThrow();
+        ((Alumno)alumno).setCarrera(carrera);
+        personaDAO.save(alumno);
+
+
+        System.out.println("----Busqueda por apellido---");
         Iterable<Persona> iPersona = personaDAO.findLastName(ObjetosDummy.getAlumnoDos().getApellido());
         iPersona.forEach(System.out::println);
-        System.out.println("---Busqueda de persona por DNI");
-        Optional<Persona> optionalPersona = personaDAO.findDni(ObjetosDummy.getEmpleadoUno().getDni());
+        System.out.println("---Busqueda de persona por DNI----");
+        Optional<Persona> optionalPersona = personaDAO.findDni(ObjetosDummy.getAlumnoUno().getDni());
         optionalPersona.ifPresent(persona -> System.out.println(persona.toString()));
 
         System.out.println("----Busqueda de persona por nombre y apellido");
