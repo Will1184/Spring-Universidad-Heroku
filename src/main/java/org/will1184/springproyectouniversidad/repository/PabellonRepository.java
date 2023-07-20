@@ -8,7 +8,7 @@ import org.will1184.springproyectouniversidad.model.entity.Persona;
 
 @Repository
 public interface PabellonRepository extends CrudRepository<Pabellon,Integer> {
-    @Query("SELECT p FROM Pabellon p WHERE p.direccion.localidad=?1")
+    @Query("SELECT p FROM Pabellon p  WHERE p.direccion.localidad=?1")
     Iterable<Pabellon> findAllPabellonByLocalidad(String localidad);
     @Query("SELECT p FROM Pabellon p WHERE p.nombre=?1")
     Iterable<Pabellon> findAllPabellonByNombre(String nombre);

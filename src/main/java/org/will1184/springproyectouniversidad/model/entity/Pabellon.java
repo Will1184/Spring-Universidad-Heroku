@@ -3,6 +3,7 @@ package org.will1184.springproyectouniversidad.model.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.will1184.springproyectouniversidad.model.Direccion;
 
@@ -12,12 +13,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+@Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "pabellones")
-public class Pabellon implements Serializable {
+public class Pabellon  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -25,12 +27,6 @@ public class Pabellon implements Serializable {
     private String nombre;
     @Column(name = "metros_cuadrados")
     private Double mts2;
-
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "codigoPostal", column = @Column(name = "codigo_postal")),
-                    @AttributeOverride(name = "depto", column = @Column(name = "departamento"))
-    })
 
     @Column(name = "fecha_alta")
     private LocalDate fechaAlta;
@@ -49,6 +45,7 @@ public class Pabellon implements Serializable {
             @AttributeOverride(name = "depto", column = @Column(name = "departamento"))
     })
     private Direccion direccion;
+
 
 
     @PrePersist
@@ -75,8 +72,7 @@ public class Pabellon implements Serializable {
                 ", nombre: " + nombre +
                 ", mts2: " + mts2 +
                 ", fechaAlta: " + fechaAlta +
-                ", fechaModificacion: " + fechaModificacion +
-                ", aulas: " + aulas ;
+                ", fechaModificacion: " + fechaModificacion ;
     }
 
     @Override
