@@ -18,7 +18,7 @@ public class Alumno extends Persona {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             },
-            fetch = FetchType.LAZY
+            fetch = FetchType.EAGER
     )
     @JoinColumn(name = "carreras_id")
     private Carrera carrera;
@@ -27,10 +27,6 @@ public class Alumno extends Persona {
         super(id, nombre, apellido, dni, direccion);
     }
 
-    public Alumno(Integer id, String nombre, String apellido, String dni, Direccion direccion, Carrera carrera) {
-        super(id, nombre, apellido, dni, direccion);
-        this.carrera = carrera;
-    }
 
     @Override
     public String toString() {

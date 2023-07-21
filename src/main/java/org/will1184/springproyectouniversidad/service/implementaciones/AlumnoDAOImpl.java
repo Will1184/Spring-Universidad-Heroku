@@ -19,13 +19,9 @@ import java.util.List;
 @Service
 public class AlumnoDAOImpl extends PersonaDAOImpl implements AlumnoDAO {
 
-    private AlumnoRepository repository;
-    @Autowired
-    private CarreraDAO carreraDAO;
     @Autowired
     public AlumnoDAOImpl(@Qualifier("alumnoRepository") PersonaRepository repository) {
         super(repository);
-        this.repository= (AlumnoRepository) repository;
     }
 
 //    @Override
@@ -56,25 +52,23 @@ public class AlumnoDAOImpl extends PersonaDAOImpl implements AlumnoDAO {
         return alumnos;
     }
 
-    @Override
-    @Transactional
-    public Persona save(Persona entidad) {
-        if (entidad instanceof Alumno) {
-            Alumno alumno = (Alumno) entidad;
-            if (alumno.getCarrera() != null && alumno.getCarrera().getId() != null) {
-                Carrera carreraExistente = carreraDAO.findById(alumno.getCarrera().getId())
-                        .orElseThrow(() -> new IllegalArgumentException("Carrera no encontrada"));
-                alumno.setCarrera(carreraExistente);
-            }
-        }
-        return super.save(entidad);
-    }
-
-
-
+//    @Override
+//    @Transactional
+//    public Persona save(Persona entidad) {
+//        if (entidad instanceof Alumno) {
+//            Alumno alumno = (Alumno) entidad;
+//            if (alumno.getCarrera() != null && alumno.getCarrera().getId() != null) {
+//                Carrera carreraExistente = carreraDAO.findById(alumno.getCarrera().getId())
+//                        .orElseThrow(() -> new IllegalArgumentException("Carrera no encontrada"));
+//                alumno.setCarrera(carreraExistente);
+//            }
+//        }
+//        return super.save(entidad);
+//    }
+//
     @Override
     @Transactional(readOnly = true)
     public Iterable<Persona> buscarAlumnosPorCarrera(String carrera) {
-        return repository.buscarAlumnosPorCarrera(carrera);
+        return ((AlumnoRepository)repository).buscarAlumnosPorCarrera(carrera);
     }
 }

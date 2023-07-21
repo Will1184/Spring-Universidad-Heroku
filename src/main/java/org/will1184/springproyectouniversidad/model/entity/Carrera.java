@@ -1,5 +1,8 @@
 package org.will1184.springproyectouniversidad.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,11 +40,14 @@ public class Carrera implements Serializable {
             mappedBy = "carrera",
             fetch = FetchType.LAZY
     )
+    @JsonIgnoreProperties({"carrera"})
     private Set<Alumno> alumnos;
+
     @ManyToMany(
             mappedBy = "carreras",
             fetch = FetchType.LAZY
     )
+    @JsonIgnoreProperties({"carreras"})
     private Set<Profesor>profesores;
 
     public Carrera(Integer id, String nombre, Integer cantidadMaterias, Integer cantidadAnios) {
