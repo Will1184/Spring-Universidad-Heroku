@@ -7,6 +7,7 @@ import org.will1184.springproyectouniversidad.exception.BadRequestException;
 import org.will1184.springproyectouniversidad.model.entity.Alumno;
 import org.will1184.springproyectouniversidad.model.entity.Carrera;
 import org.will1184.springproyectouniversidad.model.entity.Persona;
+import org.will1184.springproyectouniversidad.service.contratos.AlumnoDAO;
 import org.will1184.springproyectouniversidad.service.contratos.CarreraDAO;
 import org.will1184.springproyectouniversidad.service.contratos.PersonaDAO;
 
@@ -24,30 +25,6 @@ public class AlumnoController extends PersonaController{
         this.carreraDAO = carreraDAO;
     }
 
-    /*@GetMapping
-    public List<Persona> obtenerTodos(){
-        List<Persona> alumnos = (List<Persona>) alumnoDao.findAll();
-        if(alumnos.isEmpty()){
-            throw new BadRequestException("No existe alumnos");
-        }
-        return alumnos;
-    }
-
-    @GetMapping("/{id}")
-    public Persona obtenerAlumnoPorId(@PathVariable(required = false) Integer id){
-        Optional<Persona> oAlumno = alumnoDao.findById(id);
-        if(!oAlumno.isPresent()) {
-            throw new BadRequestException(String.format("Alumno con id %d no existe", id));
-        }
-        return oAlumno.get();
-    }
-
-
-    @PostMapping
-    public Persona altaAlumno(@RequestBody Persona alumno){
-        return alumnoDao.save(alumno);
-    }
-*/
     @PutMapping("/{id}")
     public Persona actualizarAlumno(@PathVariable Integer id, @RequestBody Persona alumno){
         Persona alumnoUpdate = null;
@@ -62,10 +39,11 @@ public class AlumnoController extends PersonaController{
         return service.save(alumnoUpdate);
     }
 
-  /*  @DeleteMapping("/{id}")
-    public void eliminarAlumno(@PathVariable Integer id){
-        alumnoDao.deleteById(id);
-    }*/
+    @GetMapping("/alumnos-carrera")
+    public Iterable<Persona> buscarAlumnosPorcarrera(@PathVariable String carrera){
+        return ((AlumnoDAO)service).buscarAlumnosPorCarrera(carrera);
+    }
+
 
     @PutMapping("/{idAlumno}/carrera/{idCarrera}")
     public Persona asignarCarreraAlumno(@PathVariable Integer idAlumno, @PathVariable Integer idCarrera){
@@ -73,7 +51,6 @@ public class AlumnoController extends PersonaController{
         if(!oAlumno.isPresent()) {
             throw new BadRequestException(String.format("Alumno con id %d no existe", idAlumno));
         }
-
         Optional<Carrera> oCarrera = carreraDAO.findById(idCarrera);
         if(!oCarrera.isPresent()){
             throw new BadRequestException(String.format("Carrera con id %d no existe", idCarrera));
