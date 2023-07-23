@@ -1,4 +1,4 @@
-package org.will1184.springproyectouniversidad.comandos;
+package org.will1184.springproyectouniversidad.command;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

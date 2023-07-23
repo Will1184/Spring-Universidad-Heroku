@@ -1,4 +1,4 @@
-package org.will1184.springproyectouniversidad.comandos;
+package org.will1184.springproyectouniversidad.command;
 
 import org.will1184.springproyectouniversidad.model.Direccion;
 import org.will1184.springproyectouniversidad.model.entity.*;

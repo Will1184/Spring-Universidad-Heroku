@@ -1,4 +1,4 @@
-package org.will1184.springproyectouniversidad.comandos;
+package org.will1184.springproyectouniversidad.command;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,7 +9,6 @@ import org.will1184.springproyectouniversidad.model.entity.Persona;
 import org.will1184.springproyectouniversidad.model.enums.TipoEmpleado;
 import org.will1184.springproyectouniversidad.service.contratos.EmpleadoDAO;
 import org.will1184.springproyectouniversidad.service.contratos.PersonaDAO;
-import org.will1184.springproyectouniversidad.service.contratos.ProfesorDAO;
 
 import java.util.Optional;
 

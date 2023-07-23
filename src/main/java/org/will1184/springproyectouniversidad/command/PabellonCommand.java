@@ -1,4 +1,4 @@
-package org.will1184.springproyectouniversidad.comandos;
+package org.will1184.springproyectouniversidad.command;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -6,7 +6,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.will1184.springproyectouniversidad.model.entity.Aula;
 import org.will1184.springproyectouniversidad.model.entity.Pabellon;
-import org.will1184.springproyectouniversidad.model.enums.Pizarron;
 import org.will1184.springproyectouniversidad.service.contratos.AulaDAO;
 import org.will1184.springproyectouniversidad.service.contratos.PabellonDAO;
 
@@ -35,7 +34,7 @@ public class PabellonCommand implements CommandLineRunner {
         System.out.println("----Pabellones por nombre---");
         pabellonDAO.findAllPabellonByNombre("Pabellon Dos");
 
-        System.out.println("----Aula por pabellon nombre---");
+        System.out.println("----Aulas por pabellon nombre---");
         Pabellon pabellon=pabellonDAO.findById(1).orElseThrow();
         Iterable<Aula>aulas= aulaDAO.findAulasByPabellonNombre(pabellon.getNombre());
         aulas.forEach(System.out::println);
