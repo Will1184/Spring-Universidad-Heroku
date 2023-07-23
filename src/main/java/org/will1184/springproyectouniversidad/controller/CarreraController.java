@@ -25,8 +25,9 @@ public class CarreraController extends GenericController<Carrera, CarreraDAO> {
         return optionalCarrera.get();
     }
 
+
     @PostMapping
-    public Carrera altaCarrera(@RequestBody Carrera carrera){
+    public Carrera altaEntidad(@RequestBody Carrera carrera){
         if (carrera.getCantidadAnios()<0){
             throw new BadRequestException("El campo de años no puede ser negativo");
         }
@@ -56,7 +57,7 @@ public class CarreraController extends GenericController<Carrera, CarreraDAO> {
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarCarrera(@PathVariable Integer id){
+    public void eliminarPorId(@PathVariable Integer id){
         service.deleteById(id);
     }
 }
