@@ -26,6 +26,22 @@ public class CarreraController extends GenericController<Carrera, CarreraDAO> {
     }
 
 
+
+    @GetMapping("/busca-carreras")
+    public Iterable<Carrera> findCarreraByNombreContains(@RequestBody String carrera){
+        return service.findCarreraByNombreContains(carrera);
+    }
+
+    @GetMapping("/busca-carreras-ignorecase")
+    public Iterable<Carrera> findCarreraByNombreContainsIgnoreCase(@RequestBody String carrera){
+        return service.findCarreraByNombreContainsIgnoreCase(carrera);
+    }
+
+    @GetMapping("/busca-carreras-ignorecase")
+    public Iterable<Carrera> findCarreraByCantidadAniosAfter(@RequestBody Integer anios){
+        return service.findCarreraByCantidadAniosAfter(anios);
+    }
+
     @PostMapping
     public Carrera altaEntidad(@RequestBody Carrera carrera){
         if (carrera.getCantidadAnios()<0){
@@ -35,6 +51,11 @@ public class CarreraController extends GenericController<Carrera, CarreraDAO> {
             throw new BadRequestException("El campo de cantidad de materias no puede ser negativo");
         }
         return service.save(carrera);
+    }
+    @GetMapping("profesor-carreras")
+    public Iterable<Carrera> buscarCarrerasPorProfesorNombreYApellido(@PathVariable String nombre,
+                                                               @PathVariable String apellido){
+        return service.buscarCarrerasPorProfesorNombreYApellido(nombre,apellido);
     }
 
     @PutMapping("/{id}")

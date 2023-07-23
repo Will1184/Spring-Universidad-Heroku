@@ -54,7 +54,7 @@ class CarreraRepositoryTest {
         carreraRepository.save(DatosDummy.carrera02());*/
 
         //when
-        List<Carrera> expected = (List<Carrera>) carreraRepository.findCarreraByNombreContainsIgnoreCase()d("sistemas");
+        List<Carrera> expected = (List<Carrera>) carreraRepository.findCarreraByNombreContainsIgnoreCase("sistemas");
 
         //then
         assertThat(expected.size() == 2).isTrue();
