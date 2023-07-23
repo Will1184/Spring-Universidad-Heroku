@@ -15,11 +15,9 @@ import java.util.List;
 
 @Service
 public class ProfesorDAOImpl extends PersonaDAOImpl implements ProfesorDAO {
-    private ProfesorRepository repository;
     @Autowired
     public ProfesorDAOImpl(@Qualifier("profesorRepository") PersonaRepository repository) {
         super(repository);
-        this.repository= (ProfesorRepository) repository;
     }
 
     @Override
@@ -32,7 +30,7 @@ public class ProfesorDAOImpl extends PersonaDAOImpl implements ProfesorDAO {
         List<Persona> profesores = new ArrayList<>();
         for (Persona persona : personas) {
             if (persona instanceof Profesor) {
-                profesores.add((Profesor) persona);
+                profesores.add(persona);
             }
         }
         return profesores;
@@ -40,6 +38,6 @@ public class ProfesorDAOImpl extends PersonaDAOImpl implements ProfesorDAO {
     @Override
     @Transactional(readOnly = true)
     public Iterable<Persona> buscarProfesoresPorCarrera(String carrera) {
-         return  repository.buscarProfesoresPorCarrera(carrera);
+         return  ((ProfesorRepository)repository).buscarProfesoresPorCarrera(carrera);
     }
 }
