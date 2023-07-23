@@ -14,10 +14,7 @@ public class PersonaController extends GenericController<Persona, PersonaDAO> {
     public PersonaController(PersonaDAO service) {
         super(service);
     }
-    @PostMapping
-    public Persona altaPersona(@RequestBody Persona alumno){
-        return service.save(alumno);
-    }
+
     @GetMapping("/nombre-apellido")
     public Persona buscarPersonaPorNombreYApellido(@RequestParam String nombre,
                                                    @RequestParam String apellido){
@@ -26,6 +23,15 @@ public class PersonaController extends GenericController<Persona, PersonaDAO> {
             throw new BadRequestException(String.format("No se encontro persona con nombre "
                     +"%s y appelido %s",nombre,apellido));
             }
+        return optionalPersona.get();
+    }
+    @GetMapping("/persona-dni")
+    public Persona buscarPorDni(@RequestParam String dni){
+        Optional<Persona>optionalPersona =service.findDni(dni);
+        if (!optionalPersona.isPresent()){
+            throw new BadRequestException(String.format("No se encontro persona con DNI "
+                    +"%s",dni));
+        }
         return optionalPersona.get();
     }
 }
