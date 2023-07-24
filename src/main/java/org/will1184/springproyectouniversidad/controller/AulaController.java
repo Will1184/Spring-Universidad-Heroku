@@ -1,9 +1,6 @@
 package org.will1184.springproyectouniversidad.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.will1184.springproyectouniversidad.exception.BadRequestException;
 import org.will1184.springproyectouniversidad.model.entity.*;
 import org.will1184.springproyectouniversidad.model.enums.Pizarron;
@@ -12,6 +9,8 @@ import org.will1184.springproyectouniversidad.service.contratos.PabellonDAO;
 
 import java.util.Optional;
 
+@RestController
+@RequestMapping("/aulas")
 public class AulaController extends GenericController<Aula, AulaDAO>{
     private final PabellonDAO pabellonDAO;
       public AulaController(AulaDAO service, PabellonDAO pabellonDAO) {
@@ -19,16 +18,16 @@ public class AulaController extends GenericController<Aula, AulaDAO>{
           this.pabellonDAO = pabellonDAO;
       }
 
-    @GetMapping("/aulas-pizarras")
-    public  Iterable<Aula>findAulasByPizarron(Pizarron pizarron){
+    @PostMapping("/aulas-pizarras")
+    public  Iterable<Aula>findAulasByPizarron(@RequestBody Pizarron pizarron){
           return service.findAulasByPizarron(pizarron);
     }
-    @GetMapping("/aulas-pabellon")
+    @PostMapping("/aulas-pabellon")
     public Iterable<Aula>findAulasByPabellonNombre(@RequestBody String nombre){
           return service.findAulasByPabellonNombre(nombre);
     }
-    @GetMapping("/nroaulas")
-    public Optional<Aula> findAulaByNroAula(Integer nroAula){
+    @GetMapping("/nroaulas/{nroAula}")
+    public Optional<Aula> findAulaByNroAula(@PathVariable Integer nroAula){
           return service.findAulaByNroAula(nroAula);
     }
 
@@ -45,8 +44,23 @@ public class AulaController extends GenericController<Aula, AulaDAO>{
 
         Pabellon pabellon = oPabellon.get();
         Aula aula = oAula.get();
-
         aula.setPabellon(pabellon);
         return service.save(aula);
+    }
+
+    @PutMapping("/{id}")
+    public Aula actualizarAula(@PathVariable Integer id, @RequestBody Aula aula){
+        Aula aulaUpdate = null;
+        Optional<Aula> oAula = service.findById(id);
+        if(!oAula.isPresent()) {
+            throw new BadRequestException(String.format("Aula con id %d no existe", id));
+        }
+        aulaUpdate =  oAula.get();
+        aulaUpdate.setNroAula(aula.getNroAula());
+        aulaUpdate.setMedidas(aula.getMedidas());
+        aulaUpdate.setPizarron(aula.getPizarron());
+        aulaUpdate.setCantPupitres(aula.getCantPupitres());
+
+        return service.save(aulaUpdate);
     }
 }

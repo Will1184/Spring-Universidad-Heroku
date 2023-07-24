@@ -1,5 +1,6 @@
 package org.will1184.springproyectouniversidad.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,6 +38,7 @@ public class Pabellon  {
             mappedBy = "pabellon",
             fetch = FetchType.LAZY
     )
+    @JsonIgnoreProperties("pabellon")
     private Set<Aula>aulas;
 
     @Embedded

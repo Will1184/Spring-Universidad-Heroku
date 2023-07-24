@@ -26,20 +26,20 @@ public class AlumnoController extends PersonaController{
     }
 
     @PutMapping("/{id}")
-    public Persona actualizarAlumno(@PathVariable Integer id, @RequestBody Persona alumno){
-        Persona alumnoUpdate = null;
+    public Persona actualizarPersona(@PathVariable Integer id, @RequestBody Alumno alumno){
+        Alumno alumnoUpdate = null;
         Optional<Persona> oAlumno = service.findById(id);
         if(!oAlumno.isPresent()) {
             throw new BadRequestException(String.format("Alumno con id %d no existe", id));
         }
-        alumnoUpdate = oAlumno.get();
+        alumnoUpdate = (Alumno) oAlumno.get();
         alumnoUpdate.setNombre(alumno.getNombre());
         alumnoUpdate.setApellido(alumno.getApellido());
         alumnoUpdate.setDireccion(alumno.getDireccion());
         return service.save(alumnoUpdate);
     }
 
-    @GetMapping("/alumnos-carrera")
+    @GetMapping("/alumnos-carrera/{carrera}")
     public Iterable<Persona> buscarAlumnosPorcarrera(@PathVariable String carrera){
         return ((AlumnoDAO)service).buscarAlumnosPorCarrera(carrera);
     }

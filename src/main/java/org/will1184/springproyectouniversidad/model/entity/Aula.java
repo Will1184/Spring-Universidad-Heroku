@@ -1,5 +1,6 @@
 package org.will1184.springproyectouniversidad.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,11 +37,10 @@ public class Aula implements Serializable {
     private LocalDate fechaModificacion;
     @ManyToOne(
             optional = true,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            }
-    )@JoinColumn(name = "pabellon_id",foreignKey = @ForeignKey(name = "FK_PABELLON_ID"))
+            cascade = { CascadeType.PERSIST, CascadeType.MERGE }
+    )
+    @JoinColumn(name = "pabellon_id", foreignKey = @ForeignKey(name = "FK_PABELLON_ID"))
+    @JsonIgnoreProperties("pabellon")
     private Pabellon pabellon;
 
     public Aula(Integer id, Integer nroAula, String medidas, Integer cantPupitres, Pizarron pizarron) {

@@ -12,6 +12,7 @@ import org.will1184.springproyectouniversidad.service.contratos.ProfesorDAO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProfesorDAOImpl extends PersonaDAOImpl implements ProfesorDAO {
@@ -35,6 +36,17 @@ public class ProfesorDAOImpl extends PersonaDAOImpl implements ProfesorDAO {
         }
         return profesores;
     }
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Persona> findById(Integer id) {
+        Optional<Persona> optionalPersona=super.findById(id);
+        Persona persona = optionalPersona.get();
+        if (persona instanceof Profesor){
+            return optionalPersona;
+        }
+        return null;
+    }
+
     @Override
     @Transactional(readOnly = true)
     public Iterable<Persona> buscarProfesoresPorCarrera(String carrera) {

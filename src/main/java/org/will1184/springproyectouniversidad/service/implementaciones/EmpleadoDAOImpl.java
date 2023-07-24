@@ -12,6 +12,7 @@ import org.will1184.springproyectouniversidad.service.contratos.EmpleadoDAO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmpleadoDAOImpl extends PersonaDAOImpl implements EmpleadoDAO {
@@ -32,6 +33,17 @@ public class EmpleadoDAOImpl extends PersonaDAOImpl implements EmpleadoDAO {
             }
         }
         return empleados;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Persona> findById(Integer id) {
+        Optional<Persona> optionalPersona=super.findById(id);
+        Persona persona = optionalPersona.get();
+        if (persona instanceof Empleado){
+            return optionalPersona;
+        }
+        return null;
     }
     @Override
     @Transactional(readOnly = true)

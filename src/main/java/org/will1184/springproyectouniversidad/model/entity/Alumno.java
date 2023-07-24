@@ -1,5 +1,6 @@
 package org.will1184.springproyectouniversidad.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.will1184.springproyectouniversidad.model.Direccion;
@@ -20,7 +21,9 @@ public class Alumno extends Persona {
             },
             fetch = FetchType.EAGER
     )
+
     @JoinColumn(name = "carreras_id")
+    @JsonIgnoreProperties("carrera")
     private Carrera carrera;
 
     public Alumno(Integer id, String nombre, String apellido, String dni, Direccion direccion) {

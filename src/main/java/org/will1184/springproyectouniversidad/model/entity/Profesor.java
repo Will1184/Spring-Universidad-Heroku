@@ -1,5 +1,6 @@
 package org.will1184.springproyectouniversidad.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.will1184.springproyectouniversidad.model.Direccion;
@@ -30,6 +31,7 @@ public class Profesor extends Persona {
             joinColumns = @JoinColumn(name ="profesor_id"),
             inverseJoinColumns = @JoinColumn(name = "carrera_id")
     )
+    @JsonIgnoreProperties({"profesor"})
     private Set<Carrera> carreras;
 
     public Profesor(Integer id, String nombre, String apellido, String dni, Direccion direccion, BigDecimal sueldo) {

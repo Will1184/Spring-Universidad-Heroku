@@ -12,6 +12,7 @@ import org.will1184.springproyectouniversidad.service.contratos.AlumnoDAO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlumnoDAOImpl extends PersonaDAOImpl implements AlumnoDAO {
@@ -32,6 +33,17 @@ public class AlumnoDAOImpl extends PersonaDAOImpl implements AlumnoDAO {
             }
         }
         return alumnos;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Persona> findById(Integer id) {
+        Optional<Persona> optionalPersona=super.findById(id);
+        Persona persona = optionalPersona.get();
+        if (persona instanceof Alumno){
+            return optionalPersona;
+        }
+        return null;
     }
 
     @Override

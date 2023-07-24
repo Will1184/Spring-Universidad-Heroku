@@ -10,11 +10,12 @@ import org.will1184.springproyectouniversidad.service.contratos.CarreraDAO;
 import org.will1184.springproyectouniversidad.service.contratos.PersonaDAO;
 import org.will1184.springproyectouniversidad.service.contratos.ProfesorDAO;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/Profesores")
+@RequestMapping("/profesores")
 public class ProfesorController extends PersonaController{
     private final CarreraDAO carreraDAO;
 
@@ -26,20 +27,6 @@ public class ProfesorController extends PersonaController{
     @GetMapping("/profesores-carreras")
     public Iterable<Persona> buscarProfesoresPorCarrera(@RequestBody String carrera){
         return ((ProfesorDAO)service).buscarProfesoresPorCarrera(carrera);
-    }
-
-    @PutMapping("/{id}")
-    public Persona actualizarProfesor(@PathVariable Integer id, @RequestBody Persona profesor){
-        Persona profesorUpdate = null;
-        Optional<Persona> oProfesor = service.findById(id);
-        if(!oProfesor.isPresent()) {
-            throw new BadRequestException(String.format("Profesor con id %d no existe", id));
-        }
-        profesorUpdate = oProfesor.get();
-        profesorUpdate.setNombre(profesor.getNombre());
-        profesorUpdate.setApellido(profesor.getApellido());
-        profesorUpdate.setDireccion(profesor.getDireccion());
-        return service.save(profesorUpdate);
     }
 
     @PutMapping("/{idProfesor}/carrera/{idCarrera}")
@@ -56,8 +43,24 @@ public class ProfesorController extends PersonaController{
         Persona profesor = oProfesor.get();
         Carrera carrera = oCarrera.get();
 
-        ((Profesor)profesor).setCarreras((Set<Carrera>) carrera);
-
+        Set<Carrera> carreras = new HashSet<>();
+        carreras.add(carrera);
+        ((Profesor)profesor).setCarreras(carreras);
         return service.save(profesor);
+    }
+
+    @PutMapping("/{id}")
+    public Persona actualizarProfesor(@PathVariable Integer id, @RequestBody Profesor profesor){
+        Profesor profesorUpdate = null;
+        Optional<Persona> oProfesor = service.findById(id);
+        if(!oProfesor.isPresent()) {
+            throw new BadRequestException(String.format("Profesor con id %d no existe", id));
+        }
+        profesorUpdate = (Profesor) oProfesor.get();
+        profesorUpdate.setNombre(profesor.getNombre());
+        profesorUpdate.setApellido(profesor.getApellido());
+        profesorUpdate.setDireccion(profesor.getDireccion());
+        profesorUpdate.setSueldo(profesor.getSueldo());
+        return service.save(profesorUpdate);
     }
 }

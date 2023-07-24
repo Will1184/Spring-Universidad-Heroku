@@ -25,7 +25,8 @@ import java.util.Objects;
 )
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Alumno.class,name = "alumno"),
-        @JsonSubTypes.Type(value = Profesor.class,name = "profesor")
+        @JsonSubTypes.Type(value = Profesor.class,name = "profesor"),
+        @JsonSubTypes.Type(value = Empleado.class,name = "empleado")
 })
 public abstract class Persona implements Serializable {
     @Id
