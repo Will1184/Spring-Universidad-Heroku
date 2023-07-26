@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/aulas")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AulaController extends GenericController<Aula, AulaDAO>{
     private final PabellonDAO pabellonDAO;
       public AulaController(AulaDAO service, PabellonDAO pabellonDAO) {

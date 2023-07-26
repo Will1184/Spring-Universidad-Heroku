@@ -9,6 +9,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/pabellones")
+@CrossOrigin(origins = "http://localhost:4200")
 public class PabellonController extends GenericController<Pabellon, PabellonDAO> {
     public PabellonController(PabellonDAO service) {
         super(service);

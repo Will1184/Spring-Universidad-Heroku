@@ -14,9 +14,7 @@ import org.will1184.springproyectouniversidad.repository.PersonaRepository;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.springsimplespasos.universidad.universidadbackend.datos.DatosDummy.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.will1184.springproyectouniversidad.universidadbackend.datos.DatosDummy.*;
 
 @DataJpaTest

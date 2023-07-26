@@ -16,6 +16,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/profesores")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ProfesorController extends PersonaController{
     private final CarreraDAO carreraDAO;
 

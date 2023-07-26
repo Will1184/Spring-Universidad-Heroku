@@ -2,6 +2,7 @@ package org.will1184.springproyectouniversidad.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.will1184.springproyectouniversidad.exception.BadRequestException;
 import org.will1184.springproyectouniversidad.model.entity.Alumno;
@@ -11,10 +12,13 @@ import org.will1184.springproyectouniversidad.service.contratos.AlumnoDAO;
 import org.will1184.springproyectouniversidad.service.contratos.CarreraDAO;
 import org.will1184.springproyectouniversidad.service.contratos.PersonaDAO;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/alumnos")
+@CrossOrigin(origins = "http://localhost:4200")
 public class AlumnoController extends PersonaController{
     private final CarreraDAO carreraDAO;
 
@@ -26,17 +30,23 @@ public class AlumnoController extends PersonaController{
     }
 
     @PutMapping("/{id}")
-    public Persona actualizarPersona(@PathVariable Integer id, @RequestBody Alumno alumno){
+    public ResponseEntity<?> actualizarPersona(@PathVariable Integer id, @RequestBody Alumno alumno){
+        Map<String,Object> mensaje = new HashMap<>();
         Alumno alumnoUpdate = null;
         Optional<Persona> oAlumno = service.findById(id);
         if(!oAlumno.isPresent()) {
-            throw new BadRequestException(String.format("Alumno con id %d no existe", id));
+//            throw new BadRequestException(String.format("Alumno con id %d no existe", id));
+            mensaje.put("success",Boolean.FALSE);
+            mensaje.put("mensaje",String.format("Alumno con id %d no existe", id));
+            return ResponseEntity.badRequest().body(mensaje);
         }
         alumnoUpdate = (Alumno) oAlumno.get();
         alumnoUpdate.setNombre(alumno.getNombre());
         alumnoUpdate.setApellido(alumno.getApellido());
         alumnoUpdate.setDireccion(alumno.getDireccion());
-        return service.save(alumnoUpdate);
+        mensaje.put("datos",service.save(alumnoUpdate));
+        mensaje.put("success",Boolean.TRUE);
+        return ResponseEntity.ok().body(mensaje);
     }
 
     @GetMapping("/alumnos-carrera/{carrera}")
@@ -46,21 +56,30 @@ public class AlumnoController extends PersonaController{
 
 
     @PutMapping("/{idAlumno}/carrera/{idCarrera}")
-    public Persona asignarCarreraAlumno(@PathVariable Integer idAlumno, @PathVariable Integer idCarrera){
+    public ResponseEntity<?> asignarCarreraAlumno(@PathVariable Integer idAlumno, @PathVariable Integer idCarrera){
+        Map<String,Object> mensaje= new HashMap<>();
         Optional<Persona> oAlumno = service.findById(idAlumno);
         if(!oAlumno.isPresent()) {
-            throw new BadRequestException(String.format("Alumno con id %d no existe", idAlumno));
+//            throw new BadRequestException(String.format("Alumno con id %d no existe", idAlumno));
+        mensaje.put("success",Boolean.FALSE);
+        mensaje.put("mensaje",String.format("Alumno con id %d no existe", idAlumno));
+        return ResponseEntity.badRequest().body(mensaje);
         }
+
         Optional<Carrera> oCarrera = carreraDAO.findById(idCarrera);
         if(!oCarrera.isPresent()){
-            throw new BadRequestException(String.format("Carrera con id %d no existe", idCarrera));
+//            throw new BadRequestException(String.format("Carrera con id %d no existe", idCarrera));
+            mensaje.put("success",Boolean.FALSE);
+            mensaje.put("mensaje",String.format("Carrera con id %d no existe", idAlumno));
+            return ResponseEntity.badRequest().body(mensaje);
         }
 
         Persona alumno = oAlumno.get();
         Carrera carrera = oCarrera.get();
 
         ((Alumno)alumno).setCarrera(carrera);
-
-        return service.save(alumno);
+        mensaje.put("success",Boolean.TRUE);
+        mensaje.put("datos",service.save(alumno));
+        return ResponseEntity.ok().body(mensaje);
     }
 }

@@ -1,9 +1,8 @@
 package org.will1184.springproyectouniversidad.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,7 +10,6 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -25,10 +23,18 @@ public class Carrera implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @NotNull
+    @NotEmpty
+    @Size(min = 0,max = 80)
     @Column(nullable = false, unique = true, length = 80)
     private String nombre;
+
+    @Positive(message = "El valor no puede ser negativo")
     @Column(name = "cantidad_materias")
     private Integer cantidadMaterias;
+
+    @Positive(message = "")
     @Column(name = "cantidad_anios")
     private Integer cantidadAnios;
     @Column(name = "fecha_alta")
