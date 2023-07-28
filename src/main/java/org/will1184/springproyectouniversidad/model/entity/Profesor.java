@@ -16,6 +16,7 @@ import java.util.Set;
 @Entity
 @Table(name = "profesores")
 @PrimaryKeyJoinColumn(name = "persona_id")
+@EqualsAndHashCode(callSuper = false)
 public class Profesor extends Persona {
 
     private BigDecimal sueldo;

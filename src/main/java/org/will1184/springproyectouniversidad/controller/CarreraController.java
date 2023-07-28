@@ -1,6 +1,7 @@
 package org.will1184.springproyectouniversidad.controller;
 
 import jakarta.validation.Valid;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +13,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+@Deprecated
 @RestController
 @RequestMapping("/carreras")
 @CrossOrigin(origins = "http://localhost:4200")
+@ConditionalOnProperty(prefix = "app",name = "controller.enable-dto",havingValue = "false")
 public class CarreraController extends GenericController<Carrera, CarreraDAO> {
 
     public CarreraController(CarreraDAO service) {

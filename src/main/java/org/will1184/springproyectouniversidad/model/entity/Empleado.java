@@ -16,6 +16,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "empleados")
 @PrimaryKeyJoinColumn(name = "persona_id")
+@EqualsAndHashCode(callSuper = false)
 public class Empleado extends Persona {
 
     private BigDecimal sueldo;

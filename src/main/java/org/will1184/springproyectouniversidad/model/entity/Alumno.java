@@ -12,6 +12,7 @@ import org.will1184.springproyectouniversidad.model.Direccion;
 @Entity
 @Table(name = "alumnos")
 @PrimaryKeyJoinColumn(name = "persona_id")
+@EqualsAndHashCode(callSuper = false)
 public class Alumno extends Persona {
     @ManyToOne(
             optional = true,
