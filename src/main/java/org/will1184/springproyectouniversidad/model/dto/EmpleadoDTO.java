@@ -4,6 +4,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.will1184.springproyectouniversidad.model.Direccion;
 import org.will1184.springproyectouniversidad.model.entity.Pabellon;
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class EmpleadoDTO extends PersonaDTO{
     private BigDecimal sueldo;
     private TipoEmpleado tipoEmpleado;

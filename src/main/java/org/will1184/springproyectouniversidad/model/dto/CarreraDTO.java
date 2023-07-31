@@ -24,6 +24,7 @@ public class CarreraDTO {
     private String nombre;
     @Positive(message = "El valor no puede ser negativo")
     private Integer cantidad_materias;
+    @Positive
     private Integer cantidad_anios;
 
 }

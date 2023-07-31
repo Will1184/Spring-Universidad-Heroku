@@ -1,5 +1,7 @@
 package org.will1184.springproyectouniversidad.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -10,7 +12,17 @@ import org.will1184.springproyectouniversidad.model.Direccion;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PersonaDTO {
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "tipo"
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = AlumnoDTO.class, name = "alumno"),
+        @JsonSubTypes.Type(value = ProfesorDTO.class,name = "profesor"),
+        @JsonSubTypes.Type(value = EmpleadoDTO.class,name = "empleado")
+})
+public abstract class PersonaDTO {
     private Integer id;
     private String nombre;
     private String apellido;

@@ -7,6 +7,7 @@ import org.will1184.springproyectouniversidad.service.contratos.GenericoDAO;
 
 import java.util.*;
 
+@Deprecated
 public class GenericController<E,S extends GenericoDAO<E>> {
     protected final S service;
     protected String nombreEntidad;

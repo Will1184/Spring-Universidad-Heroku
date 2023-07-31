@@ -2,9 +2,9 @@ package org.will1184.springproyectouniversidad.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.will1184.springproyectouniversidad.exception.BadRequestException;
 import org.will1184.springproyectouniversidad.model.entity.Alumno;
 import org.will1184.springproyectouniversidad.model.entity.Carrera;
 import org.will1184.springproyectouniversidad.model.entity.Persona;
@@ -19,6 +19,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/alumnos")
 @CrossOrigin(origins = "http://localhost:4200")
+@ConditionalOnProperty(prefix = "app",name = "controller.enable-dto",havingValue = "false")
+@Deprecated
 public class AlumnoController extends PersonaController{
     private final CarreraDAO carreraDAO;
 
@@ -30,7 +32,8 @@ public class AlumnoController extends PersonaController{
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> actualizarPersona(@PathVariable Integer id, @RequestBody Alumno alumno){
+    public ResponseEntity<?> actualizarAlumno(@PathVariable Integer id,
+                                              @RequestBody Alumno alumno){
         Map<String,Object> mensaje = new HashMap<>();
         Alumno alumnoUpdate = null;
         Optional<Persona> oAlumno = service.findById(id);
