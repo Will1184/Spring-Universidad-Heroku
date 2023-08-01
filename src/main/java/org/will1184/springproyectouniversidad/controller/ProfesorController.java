@@ -1,6 +1,7 @@
 package org.will1184.springproyectouniversidad.controller;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.*;
 import org.will1184.springproyectouniversidad.exception.BadRequestException;
 import org.will1184.springproyectouniversidad.model.entity.Carrera;
@@ -14,9 +15,11 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+@Deprecated
 @RestController
 @RequestMapping("/profesores")
 @CrossOrigin(origins = "http://localhost:4200")
+@ConditionalOnProperty(prefix = "app",name = "controller.enable-dto",havingValue = "false")
 public class ProfesorController extends PersonaController{
     private final CarreraDAO carreraDAO;
 

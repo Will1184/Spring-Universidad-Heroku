@@ -6,15 +6,21 @@ import org.will1184.springproyectouniversidad.model.entity.Empleado;
 import org.will1184.springproyectouniversidad.model.entity.Persona;
 import org.will1184.springproyectouniversidad.model.entity.Profesor;
 import org.will1184.springproyectouniversidad.model.mapper.mapstruct.AlumnoMapper;
+import org.will1184.springproyectouniversidad.model.mapper.mapstruct.EmpleadoMapper;
 import org.will1184.springproyectouniversidad.service.contratos.PersonaDAO;
 
 import java.util.Optional;
 
 public class PersonaDTOController extends GenericDTOController<Persona, PersonaDAO>{
-    protected final AlumnoMapper alumnoMapper;
+    protected AlumnoMapper alumnoMapper;
+    protected EmpleadoMapper empleadoMapper;
     public PersonaDTOController(PersonaDAO service, String nombre_entidad, AlumnoMapper alumnoMapper) {
         super(service, nombre_entidad);
         this.alumnoMapper = alumnoMapper;
+    }
+    public PersonaDTOController(PersonaDAO service, String nombre_entidad, EmpleadoMapper empleadoMapper) {
+        super(service, nombre_entidad);
+        this.empleadoMapper = empleadoMapper;
     }
 
 
@@ -45,7 +51,7 @@ public class PersonaDTOController extends GenericDTOController<Persona, PersonaD
         if (persona instanceof Alumno){
             dto = alumnoMapper.mapAlumno((Alumno) persona);
         }else if(persona instanceof Profesor){
-
+            dto = empleadoMapper.mapEmpleado((Empleado) persona);
         }else  if (persona instanceof Empleado){
 
         }

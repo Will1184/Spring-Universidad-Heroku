@@ -1,5 +1,6 @@
 package org.will1184.springproyectouniversidad.controller;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.*;
 import org.will1184.springproyectouniversidad.exception.BadRequestException;
 import org.will1184.springproyectouniversidad.model.entity.*;
@@ -9,9 +10,11 @@ import org.will1184.springproyectouniversidad.service.contratos.PabellonDAO;
 
 import java.util.Optional;
 
+@Deprecated
 @RestController
 @RequestMapping("/aulas")
 @CrossOrigin(origins = "http://localhost:4200")
+@ConditionalOnProperty(prefix = "app",name = "controller.enable-dto",havingValue = "false")
 public class AulaController extends GenericController<Aula, AulaDAO>{
     private final PabellonDAO pabellonDAO;
       public AulaController(AulaDAO service, PabellonDAO pabellonDAO) {

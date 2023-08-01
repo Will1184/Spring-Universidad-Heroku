@@ -7,25 +7,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.will1184.springproyectouniversidad.model.dto.AlumnoDTO;
+import org.will1184.springproyectouniversidad.model.dto.EmpleadoDTO;
 import org.will1184.springproyectouniversidad.model.dto.PersonaDTO;
-import org.will1184.springproyectouniversidad.model.mapper.mapstruct.AlumnoMapper;
-
+import org.will1184.springproyectouniversidad.model.mapper.mapstruct.EmpleadoMapper;
 import org.will1184.springproyectouniversidad.service.contratos.PersonaDAO;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/alumnos")
+@RequestMapping("/empleados")
 @ConditionalOnProperty(prefix = "app",name = "controller.enable-dto",havingValue = "true")
-public class AlumnoDTOController extends PersonaDTOController {
-    public AlumnoDTOController(@Qualifier("alumnoDAOImpl") PersonaDAO service, AlumnoMapper alumnoMapper) {
-        super(service, "alumno", alumnoMapper);
+public class EmpleadoDTOController extends PersonaDTOController{
+
+    public EmpleadoDTOController(@Qualifier("empleadoDAOImpl") PersonaDAO service, EmpleadoMapper empleadoMapper) {
+        super(service, "empleado", empleadoMapper);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findAlumnoId(@PathVariable Integer id) {
+    public ResponseEntity<?> findEmpleadoId(@PathVariable Integer id) {
         Map<String, Object> mensaje = new HashMap<>();
         PersonaDTO dto = super.findPersonaId(id);
         if (dto == null) {
@@ -39,7 +39,7 @@ public class AlumnoDTOController extends PersonaDTOController {
     }
 
     @PostMapping
-    public ResponseEntity<?> altaAlumno(@Valid @RequestBody PersonaDTO personaDTO, BindingResult result){
+    public ResponseEntity<?> altaEmpleado(@Valid @RequestBody PersonaDTO personaDTO, BindingResult result){
         Map<String,Object> mensaje = new HashMap<>();
 
         if (result.hasErrors()){
@@ -47,7 +47,7 @@ public class AlumnoDTOController extends PersonaDTOController {
             mensaje.put("validaciones",super.obtenerValidaciones(result));
             return ResponseEntity.badRequest().body(mensaje);
         }
-        PersonaDTO save = super.altaPersona(alumnoMapper.mapAlumno((AlumnoDTO) personaDTO));
+        PersonaDTO save = super.altaPersona(empleadoMapper.mapEmpleado((EmpleadoDTO) personaDTO));
         mensaje.put("success",Boolean.TRUE);
         mensaje.put("data",save);
         return ResponseEntity.status(HttpStatus.CREATED).body(mensaje);
