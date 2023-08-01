@@ -1,5 +1,6 @@
 package org.will1184.springproyectouniversidad.controller.dto;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/carreras")
+
 @ConditionalOnProperty(prefix = "app",name = "controller.enable-dto",havingValue = "true")
 public class CarreraDTOController {
 

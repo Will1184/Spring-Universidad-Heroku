@@ -1,5 +1,6 @@
 package org.will1184.springproyectouniversidad.controller.dto;
 
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/restapi")
+
 public class PrimerRestController {
     @GetMapping("/hola-mundo")
     public ResponseEntity<Map<String,String>> holaMundo(){

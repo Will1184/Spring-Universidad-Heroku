@@ -1,5 +1,6 @@
 package org.will1184.springproyectouniversidad.controller.dto;
 
+
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
