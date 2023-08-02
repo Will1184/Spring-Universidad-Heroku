@@ -87,6 +87,7 @@
     </dependencies>
 
     <build>
+        <finalName>universidad</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -111,14 +112,14 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
-                <plugin>
+            <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <configuration>
                         <mainClass>org.will1184.springproyectouniversidad.SpringProyectoUniversidadApplication</mainClass>
                         <layout>JAR</layout>
                     </configuration>
-                </plugin>
+            </plugin>
         </plugins>
     </build>
 

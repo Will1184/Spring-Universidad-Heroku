@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.will1184.springproyectouniversidad.model.entity.Carrera;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @SpringBootApplication
-public class SpringProyectoUniversidadApplication {
+public class SpringProyectoUniversidadApplication extends SpringBootServletInitializer {
 
 //    @Autowired
 //    AlumnoDAOImpl service;

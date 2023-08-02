@@ -55,7 +55,7 @@ public class AlumnoDTOController extends PersonaDTOController {
         dto.setApellido(alumno.getApellido());
         dto.setDireccion(alumno.getDireccion());
 
-        Alumno alumnoUpdate = alumnoMapper.mapAlumno(dto);
+        Alumno alumnoUpdate = alumnoMapper.mapAlumno((AlumnoDTO) dto);
         mensaje.put("datos",super.altaPersona(alumnoUpdate));
         mensaje.put("success",Boolean.TRUE);
         return ResponseEntity.ok().body(mensaje);
