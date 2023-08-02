@@ -22,18 +22,6 @@ public class AlumnoDAOImpl extends PersonaDAOImpl implements AlumnoDAO {
         super(repository);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Iterable<Persona> findAll() {
-        Iterable<Persona> personas = super.findAll();
-        List<Persona> alumnos = new ArrayList<>();
-        for (Persona persona : personas) {
-            if (persona instanceof Alumno) {
-                alumnos.add(persona);
-            }
-        }
-        return alumnos;
-    }
 
     @Override
     @Transactional(readOnly = true)

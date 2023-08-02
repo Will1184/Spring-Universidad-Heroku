@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/carreras")
-
 @ConditionalOnProperty(prefix = "app",name = "controller.enable-dto",havingValue = "true")
 public class CarreraDTOController {
 

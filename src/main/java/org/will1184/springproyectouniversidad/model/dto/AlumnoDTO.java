@@ -13,10 +13,6 @@ import org.will1184.springproyectouniversidad.model.entity.Carrera;
 @EqualsAndHashCode(callSuper = false)
 public class AlumnoDTO extends PersonaDTO {
 
-    private Carrera carrera;
+    private CarreraDTO carrera;
 
-    public AlumnoDTO(Integer id, String nombre, String apellido, String dni, Direccion direccion, Carrera carrera) {
-        super(id, nombre, apellido, dni, direccion);
-        this.carrera = carrera;
-    }
 }

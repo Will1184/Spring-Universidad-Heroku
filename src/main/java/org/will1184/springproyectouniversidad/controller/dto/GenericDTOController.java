@@ -33,4 +33,8 @@ public class GenericDTOController <E,S extends GenericoDAO<E>> {
     }
 
 
+    public void deleteByid(Integer id){
+        service.deleteById(id);
+    }
+
 }
