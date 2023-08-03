@@ -23,24 +23,9 @@ public class ProfesorDAOImpl extends PersonaDAOImpl implements ProfesorDAO {
 
     @Override
     @Transactional(readOnly = true)
-    public Iterable<Persona> findAll() {
-        // Llamada al método findAll() del repositorio que devuelve todas las personas (incluidos profesores y alumnos)
-        Iterable<Persona> personas = super.findAll();
-
-        // Filtrar las personas para obtener solo las instancias de Profesor
-        List<Persona> profesores = new ArrayList<>();
-        for (Persona persona : personas) {
-            if (persona instanceof Profesor) {
-                profesores.add(persona);
-            }
-        }
-        return profesores;
-    }
-    @Override
-    @Transactional(readOnly = true)
     public Optional<Persona> findById(Integer id) {
         Optional<Persona> optionalPersona=super.findById(id);
-        Persona persona = optionalPersona.get();
+        Persona persona = optionalPersona.orElse(null);
         if (persona instanceof Profesor){
             return optionalPersona;
         }
