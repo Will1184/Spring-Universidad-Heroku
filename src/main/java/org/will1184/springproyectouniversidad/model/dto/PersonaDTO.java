@@ -2,8 +2,6 @@ package org.will1184.springproyectouniversidad.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -28,8 +26,8 @@ public abstract class PersonaDTO {
     private Integer id;
     private String nombre;
     private String apellido;
-    @Pattern(regexp = "[0-9]")
-    @Size(min = 1,max = 10)
+    @Pattern(regexp = "[0-9]+")
+    @Size(min = 1, max = 9)
     private String dni;
     private Direccion direccion;
 }

@@ -16,18 +16,16 @@ import java.util.Optional;
 
 @Service
 public class AlumnoDAOImpl extends PersonaDAOImpl implements AlumnoDAO {
-
     @Autowired
     public AlumnoDAOImpl(@Qualifier("alumnoRepository") PersonaRepository repository) {
         super(repository);
     }
 
-
     @Override
     @Transactional(readOnly = true)
     public Optional<Persona> findById(Integer id) {
         Optional<Persona> optionalPersona=super.findById(id);
-        Persona persona = optionalPersona.get();
+        Persona persona = optionalPersona.orElse(null);
         if (persona instanceof Alumno){
             return optionalPersona;
         }

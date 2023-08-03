@@ -14,9 +14,11 @@ import java.util.*;
 
 
 public class PersonaDTOController extends GenericDTOController<Persona, PersonaDAO>{
+
     protected AlumnoMapper alumnoMapper;
     protected EmpleadoMapper empleadoMapper;
     protected ProfesorMapper profesorMapper;
+
     public PersonaDTOController(PersonaDAO service, String nombre_entidad, AlumnoMapper alumnoMapper) {
         super(service, nombre_entidad);
         this.alumnoMapper = alumnoMapper;
@@ -31,15 +33,17 @@ public class PersonaDTOController extends GenericDTOController<Persona, PersonaD
         this.profesorMapper = profesorMapper;
     }
     public List<PersonaDTO> findAllPersonas(){
+
         List<Persona> personas = super.findAll();
         List<PersonaDTO> dtos = new ArrayList<>();
+
         personas.forEach(persona -> {
             if (persona instanceof Alumno && alumnoMapper != null) {
-                dtos.add(alumnoMapper.mapAlumnoDTO((Alumno) persona));
+                dtos.add(alumnoMapper.mapAlumno((Alumno) persona));
             } else if (persona instanceof Profesor && profesorMapper != null) {
-                dtos.add(profesorMapper.mapProfesor((Profesor) persona));
+                dtos.add(profesorMapper.mapProfesorDTO((Profesor) persona));
             } else if (persona instanceof Empleado && empleadoMapper != null) {
-                dtos.add(empleadoMapper.mapEmpleado((Empleado) persona));
+                dtos.add(empleadoMapper.mapEmpleadoDTO((Empleado) persona));
             }
         });
 
@@ -47,64 +51,75 @@ public class PersonaDTOController extends GenericDTOController<Persona, PersonaD
     }
 
     public PersonaDTO findPersonaId(Integer id){
+
         Optional<Persona>optionalPersona= super.findId(id);
         Persona persona;
         PersonaDTO dto = null;
-        if (optionalPersona == null || optionalPersona.isEmpty()) {
-            return null;
-        }else {
-            persona = optionalPersona.get();
-        }
-        if (persona instanceof Alumno){
-            dto = alumnoMapper.mapAlumnoDTO((Alumno) persona);
-        }else if(persona instanceof Profesor){
-            dto = profesorMapper.mapProfesor((Profesor) persona);
-        }else  if (persona instanceof Empleado){
-            dto = empleadoMapper.mapEmpleado((Empleado) persona);
-        }
-        return dto;
-    }
 
-    public PersonaDTO altaPersona(Persona persona){
-        Persona personaEntidad =super.altaEntidad(persona);
+        if (optionalPersona == null || optionalPersona.isEmpty()) {
+                return null;
+        }else {
+                persona = optionalPersona.get();
+        }
+
+        if (persona instanceof Alumno){
+                dto = alumnoMapper.mapAlumno((Alumno) persona);
+        }else if(persona instanceof Profesor){
+                dto = profesorMapper.mapProfesorDTO((Profesor) persona);
+        }else  if (persona instanceof Empleado){
+                dto = empleadoMapper.mapEmpleadoDTO((Empleado) persona);
+        }
+
+            return dto;
+        }
+
+        public PersonaDTO altaPersona(Persona persona){
+
+        Persona personaEntidad = super.altaEntidad(persona);
         PersonaDTO dto = null;
 
         if (personaEntidad instanceof Alumno){
-            dto =alumnoMapper.mapAlumnoDTO((Alumno) personaEntidad);
-
+            dto =alumnoMapper.mapAlumno((Alumno) personaEntidad);
         }else if(personaEntidad instanceof Profesor){
-            dto =profesorMapper.mapProfesor((Profesor) personaEntidad);
+            dto =profesorMapper.mapProfesorDTO((Profesor) personaEntidad);
 
         }else  if (personaEntidad instanceof Empleado){
-            dto =empleadoMapper.mapEmpleado((Empleado) personaEntidad);
+            dto =empleadoMapper.mapEmpleadoDTO((Empleado) personaEntidad);
         }
+
         return dto;
     }
+
     public void deletePersonaId(Integer id){
         super.deleteByid(id);
     }
 
     public PersonaDTO buscarPersonaPorNombreYApellido( String nombre,String apellido){
+
         Optional<Persona>optionalPersona =service.findNameLastName(nombre,apellido);
         Persona persona;
         PersonaDTO dto = null;
-        if (optionalPersona == null || optionalPersona.isEmpty()) {
+
+        if (optionalPersona == null) {
             return null;
         }else {
             persona=optionalPersona.get();
         }
+
         if (persona instanceof Alumno){
-            dto =alumnoMapper.mapAlumnoDTO((Alumno) persona);
+            dto =alumnoMapper.mapAlumno((Alumno) persona);
 
         }else if(persona instanceof Profesor){
-            dto =profesorMapper.mapProfesor((Profesor) persona);
+            dto =profesorMapper.mapProfesorDTO((Profesor) persona);
 
         }else  if (persona instanceof Empleado){
-            dto =empleadoMapper.mapEmpleado((Empleado) persona);
+            dto =empleadoMapper.mapEmpleadoDTO((Empleado) persona);
         }
         return dto;
     }
+
     public PersonaDTO buscarPorDni(String dni){
+
         Optional<Persona>optionalPersona =service.findDni(dni);
         Persona persona;
         PersonaDTO dto = null;
@@ -115,13 +130,13 @@ public class PersonaDTOController extends GenericDTOController<Persona, PersonaD
            persona= optionalPersona.get();
         }
         if (persona instanceof Alumno){
-            dto = alumnoMapper.mapAlumnoDTO((Alumno) persona);
+            dto = alumnoMapper.mapAlumno((Alumno) persona);
 
         }else if(persona instanceof Profesor){
-            dto =profesorMapper.mapProfesor((Profesor) persona);
+            dto =profesorMapper.mapProfesorDTO((Profesor) persona);
 
         }else  if (persona instanceof Empleado){
-            dto =empleadoMapper.mapEmpleado((Empleado) persona);
+            dto =empleadoMapper.mapEmpleadoDTO((Empleado) persona);
         }
         return dto;
     }

@@ -6,7 +6,6 @@ import lombok.*;
 import org.will1184.springproyectouniversidad.model.Direccion;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

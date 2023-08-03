@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.*;
 import org.will1184.springproyectouniversidad.model.dto.AlumnoDTO;
 import org.will1184.springproyectouniversidad.model.dto.PersonaDTO;
 import org.will1184.springproyectouniversidad.model.entity.Alumno;
+import org.will1184.springproyectouniversidad.model.entity.Carrera;
 import org.will1184.springproyectouniversidad.model.entity.Persona;
 import org.will1184.springproyectouniversidad.model.mapper.mapstruct.AlumnoMapper;
-
+import org.will1184.springproyectouniversidad.model.mapper.mapstruct.CarreraMapperMs;
+import org.will1184.springproyectouniversidad.service.contratos.AlumnoDAO;
 import org.will1184.springproyectouniversidad.service.contratos.CarreraDAO;
 import org.will1184.springproyectouniversidad.service.contratos.PersonaDAO;
 
@@ -27,6 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/alumnos")
@@ -35,14 +38,16 @@ import java.util.Optional;
 public class AlumnoDTOController extends PersonaDTOController {
 
     private final CarreraDAO carreraDAO;
-    public AlumnoDTOController(@Qualifier("alumnoDAOImpl") PersonaDAO service, AlumnoMapper alumnoMapper, CarreraDAO carreraDAO) {
+    private final CarreraMapperMs carreraMapperMs;
+    public AlumnoDTOController(@Qualifier("alumnoDAOImpl") PersonaDAO service, AlumnoMapper alumnoMapper, CarreraDAO carreraDAO, CarreraMapperMs carreraMapperMs) {
         super(service, "alumno", alumnoMapper);
         this.carreraDAO = carreraDAO;
+        this.carreraMapperMs = carreraMapperMs;
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> actualizarAlumno(@PathVariable Integer id,
-                                              @RequestBody AlumnoDTO alumno){
+                                                   @RequestBody AlumnoDTO alumno){
         Map<String,Object> mensaje = new HashMap<>();
         PersonaDTO dto= super.findPersonaId(id);
         if(dto==null) {
@@ -78,6 +83,7 @@ public class AlumnoDTOController extends PersonaDTOController {
             @ApiResponse(responseCode = "500", description = "Error de servido lo siento",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
     })
+
     @GetMapping("/{id}")
     public ResponseEntity<?> findAlumnoId(@PathVariable Integer id) {
         Map<String, Object> mensaje = new HashMap<>();
@@ -101,9 +107,10 @@ public class AlumnoDTOController extends PersonaDTOController {
             mensaje.put("validaciones",super.obtenerValidaciones(result));
             return ResponseEntity.badRequest().body(mensaje);
         }
-        PersonaDTO save = super.altaPersona(alumnoMapper.mapAlumno((AlumnoDTO) personaDTO));
+        Persona persona = alumnoMapper.mapAlumno((AlumnoDTO) personaDTO);
+
         mensaje.put("success",Boolean.TRUE);
-        mensaje.put("data",save);
+        mensaje.put("data",super.altaPersona(persona));
         return ResponseEntity.status(HttpStatus.CREATED).body(mensaje);
     }
 
@@ -150,4 +157,41 @@ public class AlumnoDTOController extends PersonaDTOController {
         mensaje.put("success",Boolean.TRUE);
         return ResponseEntity.ok().body(mensaje);
     }
+
+    @PutMapping("/{idAlumno}/carrera/{idCarrera}")
+    public ResponseEntity<?> asignarCarreraAlumno(@PathVariable Integer idAlumno, @PathVariable Integer idCarrera){
+        Map<String,Object> mensaje= new HashMap<>();
+        PersonaDTO oAlumno = super.findPersonaId(idAlumno);
+        if(oAlumno==null) {
+            mensaje.put("success",Boolean.FALSE);
+            mensaje.put("mensaje",String.format("Alumno con id %d no existe", idAlumno));
+            return ResponseEntity.badRequest().body(mensaje);
+        }
+        Optional<Carrera> oCarrera = carreraDAO.findById(idCarrera);
+        if(oCarrera.isEmpty()){
+            mensaje.put("success",Boolean.FALSE);
+            mensaje.put("mensaje",String.format("Carrera con id %d no existe",idCarrera ));
+            return ResponseEntity.badRequest().body(mensaje);
+        }
+        Persona alumno = alumnoMapper.mapAlumno((AlumnoDTO) oAlumno);
+        Carrera carrera = oCarrera.get();
+        ((Alumno)alumno).setCarrera(carrera);
+
+        mensaje.put("success",Boolean.TRUE);
+        mensaje.put("data",service.save(alumno));
+        return ResponseEntity.ok().body(mensaje);
+    }
+
+    @GetMapping("/alumnos-carrera/{carrera}")
+    public ResponseEntity<?> buscarAlumnosPorcarrera(@PathVariable String carrera){
+        Map<String,Object> mensaje= new HashMap<>();
+        List<Persona> alumnos = ((List<Persona>)((AlumnoDAO)service).buscarAlumnosPorCarrera(carrera));
+        List<AlumnoDTO> dtos =alumnos.stream()
+                        .map(persona -> alumnoMapper.mapAlumno((Alumno) persona))
+                        .collect(Collectors.toList());
+        mensaje.put("success",Boolean.TRUE);
+        mensaje.put("data",dtos);
+        return  ResponseEntity.ok().body(mensaje);
+    }
+
 }

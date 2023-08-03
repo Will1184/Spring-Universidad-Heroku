@@ -54,6 +54,5 @@ public class AlumnoCommand implements CommandLineRunner {
         System.out.println("----- Busqueda de alumnos por carrera ----");
         Iterable<Persona> iAlumnos = ((AlumnoDAO)personaDAO).buscarAlumnosPorCarrera(ObjetosDummy.getCarreraIngSis().getNombre());
         iAlumnos.forEach(System.out::println);
-
     }
 }
