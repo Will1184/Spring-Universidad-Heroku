@@ -39,7 +39,7 @@ public class EmpleadoDAOImpl extends PersonaDAOImpl implements EmpleadoDAO {
     @Transactional(readOnly = true)
     public Optional<Persona> findById(Integer id) {
         Optional<Persona> optionalPersona=super.findById(id);
-        Persona persona = optionalPersona.get();
+        Persona persona = optionalPersona.orElse(null);
         if (persona instanceof Empleado){
             return optionalPersona;
         }
