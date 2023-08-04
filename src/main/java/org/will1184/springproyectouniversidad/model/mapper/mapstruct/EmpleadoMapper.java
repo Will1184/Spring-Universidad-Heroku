@@ -7,7 +7,7 @@ import org.will1184.springproyectouniversidad.model.entity.Empleado;
 @Mapper(componentModel = "spring",config = EmpleadoMappperConfig.class)
 public  interface EmpleadoMapper {
 
-    EmpleadoDTO mapEmpleadoDTO(Empleado empleado);
+    EmpleadoDTO mapEmpleado(Empleado empleado);
     Empleado mapEmpleado(EmpleadoDTO empleadoDTO);
 
 }

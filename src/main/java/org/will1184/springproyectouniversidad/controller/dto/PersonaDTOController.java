@@ -32,6 +32,7 @@ public class PersonaDTOController extends GenericDTOController<Persona, PersonaD
         super(service, nombre_entidad);
         this.profesorMapper = profesorMapper;
     }
+
     public List<PersonaDTO> findAllPersonas(){
 
         List<Persona> personas = super.findAll();
@@ -41,9 +42,9 @@ public class PersonaDTOController extends GenericDTOController<Persona, PersonaD
             if (persona instanceof Alumno && alumnoMapper != null) {
                 dtos.add(alumnoMapper.mapAlumno((Alumno) persona));
             } else if (persona instanceof Profesor && profesorMapper != null) {
-                dtos.add(profesorMapper.mapProfesorDTO((Profesor) persona));
+                dtos.add(profesorMapper.mapProfesor((Profesor) persona));
             } else if (persona instanceof Empleado && empleadoMapper != null) {
-                dtos.add(empleadoMapper.mapEmpleadoDTO((Empleado) persona));
+                dtos.add(empleadoMapper.mapEmpleado((Empleado) persona));
             }
         });
 
@@ -65,15 +66,15 @@ public class PersonaDTOController extends GenericDTOController<Persona, PersonaD
         if (persona instanceof Alumno){
                 dto = alumnoMapper.mapAlumno((Alumno) persona);
         }else if(persona instanceof Profesor){
-                dto = profesorMapper.mapProfesorDTO((Profesor) persona);
+                dto = profesorMapper.mapProfesor((Profesor) persona);
         }else  if (persona instanceof Empleado){
-                dto = empleadoMapper.mapEmpleadoDTO((Empleado) persona);
+                dto = empleadoMapper.mapEmpleado((Empleado) persona);
         }
 
-            return dto;
-        }
+        return dto;
+    }
 
-        public PersonaDTO altaPersona(Persona persona){
+    public PersonaDTO createPersona(Persona persona){
 
         Persona personaEntidad = super.altaEntidad(persona);
         PersonaDTO dto = null;
@@ -81,10 +82,10 @@ public class PersonaDTOController extends GenericDTOController<Persona, PersonaD
         if (personaEntidad instanceof Alumno){
             dto =alumnoMapper.mapAlumno((Alumno) personaEntidad);
         }else if(personaEntidad instanceof Profesor){
-            dto =profesorMapper.mapProfesorDTO((Profesor) personaEntidad);
+            dto =profesorMapper.mapProfesor((Profesor) personaEntidad);
 
         }else  if (personaEntidad instanceof Empleado){
-            dto =empleadoMapper.mapEmpleadoDTO((Empleado) personaEntidad);
+            dto =empleadoMapper.mapEmpleado((Empleado) personaEntidad);
         }
 
         return dto;
@@ -94,7 +95,7 @@ public class PersonaDTOController extends GenericDTOController<Persona, PersonaD
         super.deleteByid(id);
     }
 
-    public PersonaDTO buscarPersonaPorNombreYApellido( String nombre,String apellido){
+    public PersonaDTO findPersonaNombreApellido( String nombre,String apellido){
 
         Optional<Persona>optionalPersona =service.findNameLastName(nombre,apellido);
         Persona persona;
@@ -110,15 +111,16 @@ public class PersonaDTOController extends GenericDTOController<Persona, PersonaD
             dto =alumnoMapper.mapAlumno((Alumno) persona);
 
         }else if(persona instanceof Profesor){
-            dto =profesorMapper.mapProfesorDTO((Profesor) persona);
+            dto =profesorMapper.mapProfesor((Profesor) persona);
 
         }else  if (persona instanceof Empleado){
-            dto =empleadoMapper.mapEmpleadoDTO((Empleado) persona);
+            dto =empleadoMapper.mapEmpleado((Empleado) persona);
         }
+
         return dto;
     }
 
-    public PersonaDTO buscarPorDni(String dni){
+    public PersonaDTO findPersonaDni(String dni){
 
         Optional<Persona>optionalPersona =service.findDni(dni);
         Persona persona;
@@ -133,13 +135,13 @@ public class PersonaDTOController extends GenericDTOController<Persona, PersonaD
             dto = alumnoMapper.mapAlumno((Alumno) persona);
 
         }else if(persona instanceof Profesor){
-            dto =profesorMapper.mapProfesorDTO((Profesor) persona);
+            dto =profesorMapper.mapProfesor((Profesor) persona);
 
         }else  if (persona instanceof Empleado){
-            dto =empleadoMapper.mapEmpleadoDTO((Empleado) persona);
+            dto =empleadoMapper.mapEmpleado((Empleado) persona);
         }
+
         return dto;
     }
-
 
 }
