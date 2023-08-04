@@ -61,7 +61,7 @@ public class ProfesorDTOController extends PersonaDTOController{
     }
 
     @PostMapping
-    public ResponseEntity<?> altaProfesor(@Valid @RequestBody PersonaDTO personaDTO, BindingResult result){
+    public ResponseEntity<?> createProfesor(@Valid @RequestBody PersonaDTO personaDTO, BindingResult result){
         Map<String,Object> mensaje = new HashMap<>();
         if (result.hasErrors()){
             mensaje.put("success",Boolean.FALSE);

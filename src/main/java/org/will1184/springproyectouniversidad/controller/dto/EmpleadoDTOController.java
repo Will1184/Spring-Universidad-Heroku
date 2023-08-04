@@ -55,7 +55,7 @@ public class EmpleadoDTOController extends PersonaDTOController{
     }
 
     @PostMapping
-    public ResponseEntity<?> altaEmpleado(@Valid @RequestBody PersonaDTO personaDTO, BindingResult result){
+    public ResponseEntity<?> createEmpleado(@Valid @RequestBody PersonaDTO personaDTO, BindingResult result){
         Map<String,Object> mensaje = new HashMap<>();
 
         if (result.hasErrors()){
