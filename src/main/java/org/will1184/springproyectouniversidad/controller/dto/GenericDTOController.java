@@ -21,7 +21,7 @@ public class GenericDTOController <E,S extends GenericoDAO<E>> {
         return (Optional<E>) service.findById(id);
     }
 
-    public E altaEntidad(E entidad){
+    public E createEntidad(E entidad){
         return service.save(entidad);
     }
 
@@ -32,8 +32,7 @@ public class GenericDTOController <E,S extends GenericoDAO<E>> {
         return validaciones;
     }
 
-
-    public void deleteByid(Integer id){
+    public void deleteById(Integer id){
         service.deleteById(id);
     }
 
