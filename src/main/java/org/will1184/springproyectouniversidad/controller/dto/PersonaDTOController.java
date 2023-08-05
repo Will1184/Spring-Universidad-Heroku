@@ -53,7 +53,7 @@ public class PersonaDTOController extends GenericDTOController<Persona, PersonaD
 
     public PersonaDTO findPersonaId(Integer id){
 
-        Optional<Persona>optionalPersona= super.findId(id);
+        Optional<Persona>optionalPersona = super.findId(id);
         Persona persona;
         PersonaDTO dto = null;
 
@@ -76,7 +76,7 @@ public class PersonaDTOController extends GenericDTOController<Persona, PersonaD
 
     public PersonaDTO createPersona(Persona persona){
 
-        Persona personaEntidad = super.altaEntidad(persona);
+        Persona personaEntidad = super.createEntidad(persona);
         PersonaDTO dto = null;
 
         if (personaEntidad instanceof Alumno){
@@ -92,7 +92,7 @@ public class PersonaDTOController extends GenericDTOController<Persona, PersonaD
     }
 
     public void deletePersonaId(Integer id){
-        super.deleteByid(id);
+        super.deleteById(id);
     }
 
     public PersonaDTO findPersonaNombreApellido( String nombre,String apellido){

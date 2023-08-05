@@ -75,6 +75,8 @@ public class EmpleadoDTOController extends PersonaDTOController{
 
         Map<String,Object> mensaje = new HashMap<>();
         PersonaDTO personaDTO= super.findPersonaId(id);
+        EmpleadoDTO dto;
+        Empleado empleadoUpdate;
 
         if(personaDTO==null) {
             mensaje.put("success",Boolean.FALSE);
@@ -86,7 +88,7 @@ public class EmpleadoDTOController extends PersonaDTOController{
             mensaje.put("validaciones",super.obtenerValidaciones(result));
             return ResponseEntity.badRequest().body(mensaje);
         }
-        EmpleadoDTO dto = ((EmpleadoDTO)personaDTO);
+        dto = ((EmpleadoDTO)personaDTO);
         dto.setNombre(empleadoDTO.getNombre());
         dto.setApellido(empleadoDTO.getApellido());
         dto.setDireccion(empleadoDTO.getDireccion());
@@ -95,7 +97,7 @@ public class EmpleadoDTOController extends PersonaDTOController{
         dto.setSueldo(empleadoDTO.getSueldo());
         dto.setPabellon(empleadoDTO.getPabellon());
 
-        Empleado empleadoUpdate = empleadoMapper.mapEmpleado(dto);
+        empleadoUpdate = empleadoMapper.mapEmpleado(dto);
         mensaje.put("datos",super.createPersona(empleadoUpdate));
         mensaje.put("success",Boolean.TRUE);
         return ResponseEntity.ok().body(mensaje);

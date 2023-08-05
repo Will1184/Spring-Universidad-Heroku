@@ -77,7 +77,7 @@ public class AlumnoDTOController extends PersonaDTOController {
     }
 
     @PostMapping
-    public ResponseEntity<?> altaAlumno(@Valid @RequestBody PersonaDTO personaDTO, BindingResult result){
+    public ResponseEntity<?> createAlumno(@Valid @RequestBody PersonaDTO personaDTO, BindingResult result){
         Map<String,Object> mensaje = new HashMap<>();
 
         if (result.hasErrors()){
@@ -99,6 +99,8 @@ public class AlumnoDTOController extends PersonaDTOController {
 
         Map<String,Object> mensaje = new HashMap<>();
         PersonaDTO personaDTO= super.findPersonaId(id);
+        AlumnoDTO dto;
+        Alumno alumnoUpdate;
 
         if(personaDTO == null) {
             mensaje.put("success",Boolean.FALSE);
@@ -111,13 +113,13 @@ public class AlumnoDTOController extends PersonaDTOController {
             return ResponseEntity.badRequest().body(mensaje);
         }
 
-        AlumnoDTO dto = ((AlumnoDTO)personaDTO);
+        dto = ((AlumnoDTO)personaDTO);
         dto.setNombre(alumnoDTO.getNombre());
         dto.setApellido(alumnoDTO.getApellido());
         dto.setDireccion(alumnoDTO.getDireccion());
         dto.setDni(alumnoDTO.getDni());
 
-        Alumno alumnoUpdate = alumnoMapper.mapAlumno(dto);
+        alumnoUpdate = alumnoMapper.mapAlumno(dto);
         mensaje.put("datos",super.createPersona(alumnoUpdate));
         mensaje.put("success",Boolean.TRUE);
         return ResponseEntity.ok().body(mensaje);
@@ -125,8 +127,10 @@ public class AlumnoDTOController extends PersonaDTOController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAlumnoId(@PathVariable Integer id){
+
         Map<String,Object> mensaje = new HashMap<>();
         PersonaDTO personaDTO = super.findPersonaId(id);
+
         if(personaDTO==null) {
             mensaje.put("success", Boolean.FALSE);
             mensaje.put("mensaje",  String.format("No existe %s con Id %d", nombre_entidad, id));
@@ -140,9 +144,11 @@ public class AlumnoDTOController extends PersonaDTOController {
     @GetMapping("/nombre-apellido/{nombre}/{apellido}")
     public ResponseEntity<?> findAlumnoNombreApellido(
             @PathVariable String nombre, @PathVariable String apellido){
+
         Map<String,Object> mensaje = new HashMap<>();
         PersonaDTO personaDTO = super.findPersonaNombreApellido(
                 nombre,apellido);
+
         if (personaDTO==null){
             mensaje.put("success",Boolean.FALSE);
             mensaje.put("mensaje",String.format("No se encontro persona con nombre +%s y appelido %s",nombre,apellido));
@@ -155,8 +161,10 @@ public class AlumnoDTOController extends PersonaDTOController {
 
     @GetMapping("/alumno-dni")
     public ResponseEntity<Map<String, Object>> findAlumnoDni(@RequestParam String dni){
+
         Map<String,Object> mensaje = new HashMap<>();
         PersonaDTO dto = super.findPersonaDni(dni);
+
         if (dto == null){
             mensaje.put("success", Boolean.FALSE);
             mensaje.put("mensaje", String.format("No se encontro %s con DNI: %s",nombre_entidad,dni));
@@ -169,21 +177,26 @@ public class AlumnoDTOController extends PersonaDTOController {
 
     @PutMapping("/{idAlumno}/carrera/{idCarrera}")
     public ResponseEntity<?> assignCarreraAlumno(@PathVariable Integer idAlumno, @PathVariable Integer idCarrera){
+
         Map<String,Object> mensaje= new HashMap<>();
         PersonaDTO oAlumno = super.findPersonaId(idAlumno);
+        Alumno alumno;
+        Carrera carrera;
+
         if(oAlumno==null) {
             mensaje.put("success",Boolean.FALSE);
             mensaje.put("mensaje",String.format("Alumno con id %d no existe", idAlumno));
             return ResponseEntity.badRequest().body(mensaje);
         }
         Optional<Carrera> oCarrera = carreraDAO.findById(idCarrera);
+
         if(oCarrera.isEmpty()){
             mensaje.put("success",Boolean.FALSE);
             mensaje.put("mensaje",String.format("Carrera con id %d no existe",idCarrera ));
             return ResponseEntity.badRequest().body(mensaje);
         }
-        Alumno alumno = alumnoMapper.mapAlumno((AlumnoDTO) oAlumno);
-        Carrera carrera = oCarrera.get();
+        alumno = alumnoMapper.mapAlumno((AlumnoDTO) oAlumno);
+        carrera = oCarrera.get();
         alumno.setCarrera(carrera);
 
         mensaje.put("success",Boolean.TRUE);
@@ -193,6 +206,7 @@ public class AlumnoDTOController extends PersonaDTOController {
 
     @GetMapping("/alumnos-carrera/{carrera}")
     public ResponseEntity<?> findAlumnosCarrera(@PathVariable String carrera){
+
         Map<String,Object> mensaje= new HashMap<>();
         List<Persona> alumnos = ((List<Persona>)((AlumnoDAO)service).buscarAlumnosPorCarrera(carrera));
         List<AlumnoDTO> dtos =alumnos.stream()

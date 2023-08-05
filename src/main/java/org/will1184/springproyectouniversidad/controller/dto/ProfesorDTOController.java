@@ -1,6 +1,5 @@
 package org.will1184.springproyectouniversidad.controller.dto;
 
-
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -8,15 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.will1184.springproyectouniversidad.exception.BadRequestException;
-import org.will1184.springproyectouniversidad.model.dto.EmpleadoDTO;
 import org.will1184.springproyectouniversidad.model.dto.PersonaDTO;
 import org.will1184.springproyectouniversidad.model.dto.ProfesorDTO;
 import org.will1184.springproyectouniversidad.model.entity.*;
 import org.will1184.springproyectouniversidad.model.mapper.mapstruct.CarreraMapperMs;
 import org.will1184.springproyectouniversidad.model.mapper.mapstruct.ProfesorMapper;
 import org.will1184.springproyectouniversidad.service.contratos.CarreraDAO;
-import org.will1184.springproyectouniversidad.service.contratos.EmpleadoDAO;
 import org.will1184.springproyectouniversidad.service.contratos.PersonaDAO;
 import org.will1184.springproyectouniversidad.service.contratos.ProfesorDAO;
 
@@ -80,6 +76,8 @@ public class ProfesorDTOController extends PersonaDTOController{
 
         Map<String,Object> mensaje = new HashMap<>();
         PersonaDTO personaDTO= super.findPersonaId(id);
+        ProfesorDTO dto;
+        Profesor profesorUpdate;
 
         if(personaDTO==null) {
             mensaje.put("success",Boolean.FALSE);
@@ -91,14 +89,14 @@ public class ProfesorDTOController extends PersonaDTOController{
             mensaje.put("validaciones",super.obtenerValidaciones(result));
             return ResponseEntity.badRequest().body(mensaje);
         }
-        ProfesorDTO dto = ((ProfesorDTO)personaDTO);
+        dto = ((ProfesorDTO)personaDTO);
         dto.setNombre(profesorDTO.getNombre());
         dto.setApellido(profesorDTO.getApellido());
         dto.setDireccion(profesorDTO.getDireccion());
         dto.setDni(profesorDTO.getDni());
         dto.setSueldo(profesorDTO.getSueldo());
 
-        Profesor profesorUpdate = profesorMapper.mapProfesor(dto);
+        profesorUpdate = profesorMapper.mapProfesor(dto);
         mensaje.put("datos",super.createPersona(profesorUpdate));
         mensaje.put("success",Boolean.TRUE);
         return ResponseEntity.ok().body(mensaje);
@@ -167,21 +165,26 @@ public class ProfesorDTOController extends PersonaDTOController{
 
         Map<String,Object> mensaje = new HashMap<>();
         PersonaDTO personaDTO = super.findPersonaId(idProfesor);
+        Optional<Carrera> oCarrera;
+        Profesor profesor;
+        Carrera carrera;
+        Set<Carrera> carreras;
 
         if(personaDTO==null) {
             mensaje.put("success",Boolean.FALSE);
             mensaje.put("mensaje",String.format("%s con id %d no existe",nombre_entidad, idProfesor));
             return ResponseEntity.badRequest().body(mensaje);
         }
-        Optional<Carrera> oCarrera = carreraDAO.findById(idCarrera);
+
+        oCarrera = carreraDAO.findById(idCarrera);
         if(oCarrera.isEmpty()){
             mensaje.put("success",Boolean.FALSE);
             mensaje.put("mensaje",String.format("Carrera con id %d no existe",idCarrera ));
             return ResponseEntity.badRequest().body(mensaje);
         }
-        Profesor profesor = profesorMapper.mapProfesor((ProfesorDTO) personaDTO);
-        Carrera carrera = oCarrera.get();
-        Set<Carrera> carreras = new HashSet<>();
+        profesor = profesorMapper.mapProfesor((ProfesorDTO) personaDTO);
+        carrera = oCarrera.get();
+        carreras = new HashSet<>();
         carreras.add(carrera);
         profesor.setCarreras(carreras);
 
