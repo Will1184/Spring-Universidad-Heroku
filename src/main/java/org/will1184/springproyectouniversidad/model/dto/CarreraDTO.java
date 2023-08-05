@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CarreraDTO {
-    private Integer codigo;
 
+    private Integer codigo;
     @NotNull
     @NotEmpty
     @Size(max = 80)
