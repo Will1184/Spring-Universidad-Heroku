@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.will1184.springproyectouniversidad.exception.BadRequestException;
 import org.will1184.springproyectouniversidad.model.dto.AulaDTO;
 import org.will1184.springproyectouniversidad.model.entity.Aula;
 import org.will1184.springproyectouniversidad.model.entity.Pabellon;

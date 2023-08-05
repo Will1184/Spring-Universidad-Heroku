@@ -22,4 +22,5 @@ public class PabellonDAOImpl extends GenericoDAOImpl<Pabellon, PabellonRepositor
     public Iterable<Pabellon> findAllPabellonByNombre(String nombre) {
         return repository.findAllPabellonByNombre(nombre);
     }
+
 }
