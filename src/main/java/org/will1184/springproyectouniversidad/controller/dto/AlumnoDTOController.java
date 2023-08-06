@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/alumnos")
 @ConditionalOnProperty(prefix = "app",name = "controller.enable-dto",havingValue = "true")
-@Tag(name = "alumnos", description = "Catálogo de alumnos")
+@Tag(name = "Alumnos", description = "Catálogo de alumnos")
 public class AlumnoDTOController extends PersonaDTOController {
 
     private final CarreraDAO carreraDAO;
@@ -43,6 +43,11 @@ public class AlumnoDTOController extends PersonaDTOController {
         this.carreraMapperMs = carreraMapperMs;
     }
 
+    @Operation(summary = "Obtiene todos los registros")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "todos los registros de alumnos",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+    })
     @GetMapping
     public ResponseEntity<?> findAllAlumnos(){
         Map<String, Object> mensaje = new HashMap<>();
@@ -52,16 +57,13 @@ public class AlumnoDTOController extends PersonaDTOController {
         return ResponseEntity.ok().body(mensaje);
     }
 
-    @Operation(summary = "Obtiene el alumno id")
+    @Operation(summary = "Obtiene el registro por id")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "registro de alumno",
+            @ApiResponse(responseCode = "200", description = "Registro obtenido",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
-            @ApiResponse(responseCode = "400", description = "registro de alumno no existe",
-                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
-            @ApiResponse(responseCode = "500", description = "Error de servido lo siento",
+            @ApiResponse(responseCode = "400", description = "No existe registro con id",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
     })
-
     @GetMapping("/{id}")
     public ResponseEntity<?> findAlumnoId(@PathVariable Integer id) {
         Map<String, Object> mensaje = new HashMap<>();
@@ -76,6 +78,13 @@ public class AlumnoDTOController extends PersonaDTOController {
         return ResponseEntity.ok().body(mensaje);
     }
 
+    @Operation(summary = "Crea un registro")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "se creo el registro de alumno",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+            @ApiResponse(responseCode = "422", description = "No se pudo crear el registro: Datos no validos",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+    })
     @PostMapping
     public ResponseEntity<?> createAlumno(@Valid @RequestBody PersonaDTO personaDTO, BindingResult result){
         Map<String,Object> mensaje = new HashMap<>();
@@ -83,7 +92,7 @@ public class AlumnoDTOController extends PersonaDTOController {
         if (result.hasErrors()){
             mensaje.put("success",Boolean.FALSE);
             mensaje.put("validaciones",super.obtenerValidaciones(result));
-            return ResponseEntity.badRequest().body(mensaje);
+            return ResponseEntity.unprocessableEntity().body(mensaje);
         }
         Persona persona = alumnoMapper.mapAlumno((AlumnoDTO) personaDTO);
 
@@ -92,9 +101,17 @@ public class AlumnoDTOController extends PersonaDTOController {
         return ResponseEntity.status(HttpStatus.CREATED).body(mensaje);
     }
 
-
+    @Operation(summary = "Modifica un registro")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Se modifico el registro ",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+            @ApiResponse(responseCode = "422", description = "No se pudo crear el registro: Datos no validos",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+            @ApiResponse(responseCode = "400", description = "No existe registro con id",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+    })
     @PutMapping("/{id}")
-    public ResponseEntity<?> actualizarAlumno(@PathVariable Integer id,
+    public ResponseEntity<?> updateAlumno(@PathVariable Integer id,
                                              @Valid @RequestBody AlumnoDTO alumnoDTO,BindingResult result){
 
         Map<String,Object> mensaje = new HashMap<>();
@@ -110,7 +127,7 @@ public class AlumnoDTOController extends PersonaDTOController {
         if (result.hasErrors()){
             mensaje.put("success",Boolean.FALSE);
             mensaje.put("validaciones",super.obtenerValidaciones(result));
-            return ResponseEntity.badRequest().body(mensaje);
+            return ResponseEntity.unprocessableEntity().body(mensaje);
         }
 
         dto = ((AlumnoDTO)personaDTO);
@@ -125,6 +142,13 @@ public class AlumnoDTOController extends PersonaDTOController {
         return ResponseEntity.ok().body(mensaje);
     }
 
+    @Operation(summary = "Borra un registro ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Se borro el registro ",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+            @ApiResponse(responseCode = "400", description = "No existe registro con id",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAlumnoId(@PathVariable Integer id){
 
@@ -142,6 +166,13 @@ public class AlumnoDTOController extends PersonaDTOController {
         return ResponseEntity.status(HttpStatus.OK).body(mensaje);
     }
 
+    @Operation(summary = "Encuentra un registro por nombre y apellido")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Se encontro el registro ",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+            @ApiResponse(responseCode = "400", description = "No existe registro con id",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+    })
     @GetMapping("/nombre-apellido/{nombre}/{apellido}")
     public ResponseEntity<?> findAlumnoNombreApellido(
             @PathVariable String nombre, @PathVariable String apellido){
@@ -160,6 +191,13 @@ public class AlumnoDTOController extends PersonaDTOController {
         return ResponseEntity.ok().body(mensaje);
     }
 
+    @Operation(summary = "Encuentra un registro por DNI")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Se encontro el registro ",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+            @ApiResponse(responseCode = "400", description = "No existe registro con DNI",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+    })
     @GetMapping("/alumno-dni")
     public ResponseEntity<Map<String, Object>> findAlumnoDni(@RequestParam String dni){
 
@@ -176,6 +214,13 @@ public class AlumnoDTOController extends PersonaDTOController {
         return ResponseEntity.ok().body(mensaje);
     }
 
+    @Operation(summary = "Asigna una carrera a alumno")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Se asigno carrera ",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+            @ApiResponse(responseCode = "400", description = "No existe registro con id",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+    })
     @PutMapping("/{idAlumno}/carrera/{idCarrera}")
     public ResponseEntity<?> assignCarreraAlumno(@PathVariable Integer idAlumno, @PathVariable Integer idCarrera){
 
@@ -206,11 +251,23 @@ public class AlumnoDTOController extends PersonaDTOController {
         return ResponseEntity.ok().body(mensaje);
     }
 
+    @Operation(summary = "Encuentra todos los alumnos de una carrera")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Se encontro los registros ",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+            @ApiResponse(responseCode = "400", description = "No existe registro",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+    })
     @GetMapping("/alumnos-carrera/{carrera}")
     public ResponseEntity<?> findAlumnosCarrera(@PathVariable String carrera){
 
         Map<String,Object> mensaje= new HashMap<>();
         List<Persona> alumnos = ((List<Persona>)((AlumnoDAO)service).buscarAlumnosPorCarrera(carrera));
+        if (alumnos.isEmpty()){
+            mensaje.put("success",Boolean.TRUE);
+            mensaje.put("mensaje", String.format("No existen alumnos en carrera: %s ",carrera));
+            return ResponseEntity.badRequest().body(mensaje);
+        }
         List<AlumnoDTO> dtos =alumnos.stream()
                         .map(persona -> alumnoMapper.mapAlumno((Alumno) persona))
                         .collect(Collectors.toList());

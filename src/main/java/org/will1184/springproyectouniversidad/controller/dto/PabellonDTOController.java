@@ -1,6 +1,10 @@
 package org.will1184.springproyectouniversidad.controller.dto;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -10,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.will1184.springproyectouniversidad.model.dto.PabellonDTO;
+import org.will1184.springproyectouniversidad.model.entity.Alumno;
 import org.will1184.springproyectouniversidad.model.entity.Pabellon;
 import org.will1184.springproyectouniversidad.model.mapper.mapstruct.PabellonMapper;
 import org.will1184.springproyectouniversidad.service.contratos.AulaDAO;
@@ -35,12 +40,17 @@ public class PabellonDTOController extends GenericDTOController<Pabellon, Pabell
         this.aulaDAO = aulaDAO;
     }
 
+    @Operation(summary = "Obtiene todos los registros")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "todos los registros de alumnos",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+    })
     @GetMapping
     public ResponseEntity<?> findAllPabellones(){
         Map<String, Object> mensaje = new HashMap<>();
         List<Pabellon> pabellones = super.findAll();
         List<PabellonDTO> dtos = pabellones.stream()
-                .map(pabellon -> pabellonMapper.mapPabellon(pabellon))
+                .map(pabellonMapper::mapPabellon)
                 .collect(Collectors.toList());
 
         mensaje.put("succes", Boolean.TRUE);
@@ -48,10 +58,13 @@ public class PabellonDTOController extends GenericDTOController<Pabellon, Pabell
         return ResponseEntity.ok().body(mensaje);
     }
 
-    @Operation(summary = "Obtiene el Pabellon id")
+    @Operation(summary = "Obtiene el registro por id")
     @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Registro obtenido",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+            @ApiResponse(responseCode = "400", description = "No existe registro con id",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
     })
-
     @GetMapping("/{id}")
     public ResponseEntity<?> findPabellonId(@PathVariable Integer id) {
 
@@ -74,6 +87,13 @@ public class PabellonDTOController extends GenericDTOController<Pabellon, Pabell
         return ResponseEntity.ok().body(mensaje);
     }
 
+    @Operation(summary = "Crea un registro")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "se creo el registro de alumno",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+            @ApiResponse(responseCode = "422", description = "No se pudo crear el registro: Datos no validos",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+    })
     @PostMapping
     public ResponseEntity<?> createPabellon(@Valid @RequestBody PabellonDTO pabellonDTO, BindingResult result){
 
@@ -82,7 +102,7 @@ public class PabellonDTOController extends GenericDTOController<Pabellon, Pabell
         if (result.hasErrors()){
             mensaje.put("success",Boolean.FALSE);
             mensaje.put("validaciones",super.obtenerValidaciones(result));
-            return ResponseEntity.badRequest().body(mensaje);
+            return ResponseEntity.unprocessableEntity().body(mensaje);
         }
 
         Pabellon pabellon = pabellonMapper.mapPabellon(pabellonDTO);
@@ -92,8 +112,17 @@ public class PabellonDTOController extends GenericDTOController<Pabellon, Pabell
         return ResponseEntity.status(HttpStatus.CREATED).body(mensaje);
     }
 
+    @Operation(summary = "Modifica un registro")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Se modifico el registro ",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+            @ApiResponse(responseCode = "422", description = "No se pudo crear el registro: Datos no validos",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+            @ApiResponse(responseCode = "400", description = "No existe registro con id",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+    })
     @PutMapping("/{id}")
-    public ResponseEntity<?> actualizarPabellon(@PathVariable Integer id,
+    public ResponseEntity<?> updatePabellon(@PathVariable Integer id,
                                             @Valid @RequestBody PabellonDTO pabellonDTO,BindingResult result){
 
         Map<String,Object> mensaje = new HashMap<>();
@@ -104,7 +133,7 @@ public class PabellonDTOController extends GenericDTOController<Pabellon, Pabell
         if (result.hasErrors()){
             mensaje.put("success",Boolean.FALSE);
             mensaje.put("validaciones",super.obtenerValidaciones(result));
-            return ResponseEntity.badRequest().body(mensaje);
+            return ResponseEntity.unprocessableEntity().body(mensaje);
         }
 
         if(optionalPabellon == null || optionalPabellon.isEmpty()) {
@@ -125,6 +154,13 @@ public class PabellonDTOController extends GenericDTOController<Pabellon, Pabell
         return ResponseEntity.ok().body(mensaje);
     }
 
+    @Operation(summary = "Borra un registro ")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Se borro el registro ",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+            @ApiResponse(responseCode = "400", description = "No existe registro con id",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+    })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePabellonId(@PathVariable Integer id){
 
@@ -143,12 +179,24 @@ public class PabellonDTOController extends GenericDTOController<Pabellon, Pabell
         return ResponseEntity.status(HttpStatus.OK).body(mensaje);
     }
 
+    @Operation(summary = "Encuentra un registro por localidad")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Se encontro el registro ",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+            @ApiResponse(responseCode = "400", description = "No existe registro con localidad",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+    })
     @PostMapping("/pabellones-localidad")
     public ResponseEntity<?> findAllPabellonByLocalidad(@RequestParam String localidad){
         Map<String,Object> mensaje = new HashMap<>();
         List<Pabellon> pabellones = (List<Pabellon>) service.findAllPabellonByLocalidad(localidad);
+        if (pabellones.isEmpty()){
+            mensaje.put("success",Boolean.TRUE);
+            mensaje.put("mensaje", String.format("No existen pabellones en localidad: %s ",localidad));
+            return ResponseEntity.badRequest().body(mensaje);
+        }
         List<PabellonDTO> dtos = pabellones.stream()
-                .map(pabellon -> pabellonMapper.mapPabellon(pabellon))
+                .map(pabellonMapper::mapPabellon)
                 .collect(Collectors.toList());
 
         mensaje.put("success",Boolean.TRUE);
@@ -156,13 +204,24 @@ public class PabellonDTOController extends GenericDTOController<Pabellon, Pabell
         return ResponseEntity.ok().body(mensaje);
     }
 
+    @Operation(summary = "Encuentra un registro por nombre")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Se encontro el registro ",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+            @ApiResponse(responseCode = "400", description = "No existe registro con nombre",
+                    content = @Content(array = @ArraySchema(schema = @Schema(implementation = Alumno.class)))),
+    })
     @PostMapping("/pabellones-nombre")
     public ResponseEntity<Map<String, Object>> findAllPabellonByNombre(@RequestParam String nombre){
        Map<String,Object> mensaje = new HashMap<>();
-
-         List<Pabellon> pabellones = (List<Pabellon>) service.findAllPabellonByNombre(nombre);
-        List<PabellonDTO> dtos = pabellones.stream()
-                .map(pabellon -> pabellonMapper.mapPabellon(pabellon))
+       List<Pabellon> pabellones = (List<Pabellon>) service.findAllPabellonByNombre(nombre);
+        if (pabellones.isEmpty()){
+            mensaje.put("success",Boolean.TRUE);
+            mensaje.put("mensaje", String.format("No existen pabellones con el nombre: %s ",nombre));
+            return ResponseEntity.badRequest().body(mensaje);
+        }
+       List<PabellonDTO> dtos = pabellones.stream()
+                .map(pabellonMapper::mapPabellon)
                 .collect(Collectors.toList());
 
         mensaje.put("success",Boolean.TRUE);

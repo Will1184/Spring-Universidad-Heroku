@@ -1,10 +1,7 @@
 package org.will1184.springproyectouniversidad.model.dto;
 
 import jakarta.persistence.Column;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,8 +19,10 @@ public class CarreraDTO {
     @Size(max = 80)
     @Column(nullable = false, unique = true, length = 80)
     private String nombre;
+    @Min(value = 0)
     @Positive(message = "El valor no puede ser negativo")
     private Integer cantidad_materias;
+    @Min(value = 0)
     @Positive
     private Integer cantidad_anios;
 
