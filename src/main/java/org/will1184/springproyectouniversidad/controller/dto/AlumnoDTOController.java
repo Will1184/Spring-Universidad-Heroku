@@ -138,6 +138,7 @@ public class AlumnoDTOController extends PersonaDTOController {
         }
         super.deletePersonaId(id);
         mensaje.put("success",Boolean.TRUE);
+        mensaje.put("mensaje",  String.format("Se borro %s con Id %d", nombre_entidad, id));
         return ResponseEntity.status(HttpStatus.OK).body(mensaje);
     }
 
@@ -182,13 +183,14 @@ public class AlumnoDTOController extends PersonaDTOController {
         PersonaDTO oAlumno = super.findPersonaId(idAlumno);
         Alumno alumno;
         Carrera carrera;
+        Optional<Carrera> oCarrera;
 
         if(oAlumno==null) {
             mensaje.put("success",Boolean.FALSE);
             mensaje.put("mensaje",String.format("Alumno con id %d no existe", idAlumno));
             return ResponseEntity.badRequest().body(mensaje);
         }
-        Optional<Carrera> oCarrera = carreraDAO.findById(idCarrera);
+        oCarrera= carreraDAO.findById(idCarrera);
 
         if(oCarrera.isEmpty()){
             mensaje.put("success",Boolean.FALSE);

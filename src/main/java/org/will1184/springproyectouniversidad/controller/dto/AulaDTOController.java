@@ -97,7 +97,7 @@ public class AulaDTOController extends  GenericDTOController<Aula,AulaDAO>{
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> actualizarAula(@PathVariable Integer id,
+    public ResponseEntity<?> updateAula(@PathVariable Integer id,
                                               @Valid @RequestBody AulaDTO aulaDTO,BindingResult result){
 
         Map<String,Object> mensaje = new HashMap<>();
@@ -144,6 +144,7 @@ public class AulaDTOController extends  GenericDTOController<Aula,AulaDAO>{
 
         super.deleteById(id);
         mensaje.put("success",Boolean.TRUE);
+        mensaje.put("mensaje",  String.format("Se borro %s con Id %d", nombre_entidad, id));
         return ResponseEntity.status(HttpStatus.OK).body(mensaje);
     }
 

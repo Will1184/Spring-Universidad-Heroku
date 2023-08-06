@@ -139,6 +139,7 @@ public class PabellonDTOController extends GenericDTOController<Pabellon, Pabell
 
         super.deleteById(id);
         mensaje.put("success",Boolean.TRUE);
+        mensaje.put("mensaje",  String.format("Se borro %s con Id %d", nombre_entidad, id));
         return ResponseEntity.status(HttpStatus.OK).body(mensaje);
     }
 

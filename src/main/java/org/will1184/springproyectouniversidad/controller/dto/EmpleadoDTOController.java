@@ -117,6 +117,7 @@ public class EmpleadoDTOController extends PersonaDTOController{
 
         super.deletePersonaId(id);
         mensaje.put("success",Boolean.TRUE);
+        mensaje.put("mensaje",  String.format("Se borro %s con Id %d", nombre_entidad, id));
         return ResponseEntity.status(HttpStatus.OK).body(mensaje);
     }
 
