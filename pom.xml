@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.will1184</groupId>
-    <artifactId>Spring-Proyecto-Universidad</artifactId>
+    <artifactId>Spring-Proyecto-Universidad-Heroku</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Spring-Proyecto-Universidad</name>
+    <name>Spring-Proyecto-Universidad-Heroku</name>
     <description>Spring-Proyecto-Universidad</description>
     <properties>
         <java.version>17</java.version>
@@ -111,14 +111,6 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
-<!--            <plugin>-->
-<!--                    <groupId>org.springframework.boot</groupId>-->
-<!--                    <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--                    <configuration>-->
-<!--                        <mainClass>org.will1184.springproyectouniversidad.SpringProyectoUniversidadApplication</mainClass>-->
-<!--                        <layout>JAR</layout>-->
-<!--                    </configuration>-->
-<!--            </plugin>-->
         </plugins>
     </build>
 
