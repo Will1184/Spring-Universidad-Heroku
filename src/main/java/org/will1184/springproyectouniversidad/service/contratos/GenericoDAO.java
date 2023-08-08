@@ -1,7 +1,5 @@
 package org.will1184.springproyectouniversidad.service.contratos;
 
-import org.springframework.data.repository.CrudRepository;
-
 import java.util.Optional;
 
 public interface GenericoDAO<E>{

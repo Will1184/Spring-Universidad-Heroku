@@ -1,6 +1,5 @@
 package org.will1184.springproyectouniversidad.service.contratos;
 
-import org.will1184.springproyectouniversidad.model.entity.Empleado;
 import org.will1184.springproyectouniversidad.model.entity.Persona;
 import org.will1184.springproyectouniversidad.model.enums.TipoEmpleado;
 

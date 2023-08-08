@@ -1,13 +1,10 @@
 package org.will1184.springproyectouniversidad.service.implementaciones;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.will1184.springproyectouniversidad.model.entity.Aula;
-import org.will1184.springproyectouniversidad.model.entity.Persona;
 import org.will1184.springproyectouniversidad.model.enums.Pizarron;
 import org.will1184.springproyectouniversidad.repository.AulaRepository;
-import org.will1184.springproyectouniversidad.repository.PersonaRepository;
 import org.will1184.springproyectouniversidad.service.contratos.AulaDAO;
 
 import java.util.Optional;

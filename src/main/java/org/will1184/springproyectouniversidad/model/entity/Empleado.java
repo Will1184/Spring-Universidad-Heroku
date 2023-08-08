@@ -7,7 +7,6 @@ import org.will1184.springproyectouniversidad.model.Direccion;
 import org.will1184.springproyectouniversidad.model.enums.TipoEmpleado;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor

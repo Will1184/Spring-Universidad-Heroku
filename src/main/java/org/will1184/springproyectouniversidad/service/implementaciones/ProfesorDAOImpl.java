@@ -10,8 +10,6 @@ import org.will1184.springproyectouniversidad.repository.PersonaRepository;
 import org.will1184.springproyectouniversidad.repository.ProfesorRepository;
 import org.will1184.springproyectouniversidad.service.contratos.ProfesorDAO;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service

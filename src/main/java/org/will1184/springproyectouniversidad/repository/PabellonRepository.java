@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.will1184.springproyectouniversidad.model.entity.Pabellon;
-import org.will1184.springproyectouniversidad.model.entity.Persona;
 
 @Repository
 public interface PabellonRepository extends CrudRepository<Pabellon,Integer> {

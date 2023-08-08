@@ -1,6 +1,5 @@
 package org.will1184.springproyectouniversidad.service.contratos;
 
-import org.springframework.data.repository.CrudRepository;
 import org.will1184.springproyectouniversidad.model.entity.Persona;
 
 import java.util.Optional;

@@ -1,6 +1,5 @@
 package org.will1184.springproyectouniversidad.service.contratos;
 
-import org.springframework.data.jpa.repository.Query;
 import org.will1184.springproyectouniversidad.model.entity.Aula;
 import org.will1184.springproyectouniversidad.model.enums.Pizarron;
 

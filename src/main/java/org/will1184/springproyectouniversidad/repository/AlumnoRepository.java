@@ -1,9 +1,7 @@
 package org.will1184.springproyectouniversidad.repository;
 
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import org.will1184.springproyectouniversidad.model.entity.Alumno;
 import org.will1184.springproyectouniversidad.model.entity.Persona;
 
 @Repository("alumnoRepository")
